@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+  <!-- lazy flag indicates that proxies will not be used when the object is requested -->
+  <class lazy="false" name="trackit.businessobjects.Income" table="INCOME">
+    <id column="INCOME_ID" name="id">
+      <generator class="native"/>
+    </id>
+    <property column="INCOME_SOURCE_ID" name="incomeSourceId"/>
+    <property column="DEPOSIT_ID" name="depositId"/>
+    <property column="EXPENSE_GROUP_ID" name="expenseGroupId"/>
+    <property column="USER_ID" name="userId"/>
+    <property column="DATE" name="date"/>
+    <property column="AMOUNT" name="amount"/>
+    <property column="CHECK_NUMBER" name="checkNumber"/>
+  </class>
+</hibernate-mapping>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<cairngorm:ServiceLocator xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:cairngorm="com.adobe.cairngorm.business.*">
+	
+	<mx:Script>
+		<![CDATA[
+			import flash.net.navigateToURL;
+			
+			import mx.rpc.events.FaultEvent;
+			private function handleResult(event:Event):void {
+				
+			}
+			
+			private function handleFault(event:FaultEvent):void {
+				var faultEvent:FaultEvent = FaultEvent(event);
+				if (faultEvent.fault.faultCode == "Client.Authorization" || faultEvent.fault.faultCode == "Client.Error.DeliveryInDoubt") {
+					var urlRequest:URLRequest = new URLRequest("j_spring_security_logout");
+					navigateToURL(urlRequest, '_top');
+				}
+			}
+		]]>
+	</mx:Script>
+	
+	<mx:RemoteObject id="reportsService" 
+					 destination="reportsService" 
+					 endpoint="http://\{server.name\}:\{server.port\}/pmms/messagebroker/amf"
+					 result="handleResult(event)" fault="handleFault(event)"/>
+</cairngorm:ServiceLocator>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+  <class lazy="false" name="trackit.businessobjects.BankAccount" table="BANK_ACCOUNT">
+    <id column="BANK_ACCOUNT_ID" name="id">
+      <generator class="native"/>
+    </id>
+    <property name="description"/>
+    <property column="account_type_id" name="accountTypeId"/>
+    <property column="current_check_number" name="currentCheckNumber"/>
+    <property column="BALANCE" name="balance"/>
+    <property column="CREATEDDATE" name="createdDate"/>
+    <property column="CREATEDBY" name="createdBy"/>
+    <property column="MODIFIEDDATE" name="modifiedDate"/>
+    <property column="MODIFIEDBY" name="modifiedBy"/>
+    <!--set name="transactions" table="BANK_ACCOUNT_BANK_ACCOUNT_TRANSACTION">
+      <key column="BANK_ACCOUNT_ID"/>
+      <many-to-many class="trackit.businessobjects.BankAccountTransaction" column="BANK_ACCOUNT_TRANSACTION_ID"/>
+    </set-->
+  </class>
+</hibernate-mapping>

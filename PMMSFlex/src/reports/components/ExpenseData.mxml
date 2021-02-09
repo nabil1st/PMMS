@@ -1,0 +1,608 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Canvas label="Expense Data" width="100%" height="100%" horizontalScrollPolicy="off" verticalScrollPolicy="off"
+		   xmlns:mx="http://www.adobe.com/2006/mxml"
+		   xmlns:comp="com.connectedpixel.charts.*"
+		   xmlns:reports="reports.components.*">
+	<mx:Script>
+		<![CDATA[
+			import event.GetExpenseDataEvent;
+			import event.GetExpenseDataForChartItemEvent;
+			import event.GetExpenseDataForChartingEvent;
+			import event.GetExpenseTypesForCategoryEvent;
+			
+			import model.ExpenseDataModelLocator;
+			import model.ExpenseMetaDataModelLocator;
+			
+			import mx.binding.utils.ChangeWatcher;
+			import mx.charts.CategoryAxis;
+			import mx.charts.events.ChartItemEvent;
+			import mx.collections.ArrayCollection;
+			import mx.collections.ListCollectionView;
+			import mx.core.Application;
+			import mx.formatters.CurrencyFormatter;
+			import mx.formatters.DateFormatter;
+			import mx.managers.PopUpManager;
+			
+			private var userList:ArrayCollection;
+			private var payeeList:ArrayCollection;
+			private var bankAccountList:ArrayCollection; 
+			private var creditCardList:ArrayCollection;
+			private var projectList:ArrayCollection;
+			private var expenseCategoryList:ArrayCollection;
+			private var expenseTypeList:ArrayCollection;
+			private var expensePurposeList:ArrayCollection;
+			private var paymentMethodList:ArrayCollection;
+			
+			
+			
+//			[Bindable]
+//			private var expenseDateChartLength:int = 0;
+				
+			[Bindable]
+			private var expenseDataModelLocator:ExpenseDataModelLocator = ExpenseDataModelLocator.getInstance();
+			
+			[Bindable]
+			private var expenseMetaDataModelLocator:ExpenseMetaDataModelLocator = 
+				ExpenseMetaDataModelLocator.getInstance();
+			
+//			public var remoteServiceProxy:ExpenseReportsRemoteService;
+			
+			private var chartDataChangeWatcher:ChangeWatcher = ChangeWatcher.watch(expenseDataModelLocator, "expenseDataForCharting", handleChartDataChange);
+			
+			private function handleChartDataChange(event:Event):void {
+//				expenseDataChart.validateProperties();
+				if (expenseDataChartContainer != null) {
+					expenseDataChartContainer.removeAllChildren();
+					
+					if (expenseDataModelLocator.expenseDataForCharting == null ||
+						expenseDataModelLocator.expenseDataForCharting.length == 0) {
+						var noDataPanel:NoDataFoundPanel = new NoDataFoundPanel();
+						expenseDataChartContainer.addChild(noDataPanel);
+					} else {
+						var chart:ExpenseColumnChart = new ExpenseColumnChart();
+						chart.expenseDataView = this;
+						expenseDataChartContainer.addChild(chart);
+					}
+				}
+			}
+		
+			private function handleEditSearchCriteria(event:Event):void {
+				dataViewStack.selectedChild=criteriaView;
+			}
+			
+			
+			
+			private function handleSearch(event:Event):void {
+				dataViewStack.selectedChild=dataView;			
+				var accountId:String = Application.application.parameters.AccountId;
+				var userId:String = findIdForValue(String(userComboBox.selectedItem), expenseMetaDataModelLocator.usersRawList);
+				var startDate:Date = startDateField.text == null || startDateField.text.length == 0?null:startDateField.selectedDate;
+				var endDate:Date = endDateField.text == null || endDateField.text.length == 0?null:endDateField.selectedDate;
+				var payeeId:String = findIdForValue(String(payeeComboBox.selectedItem), expenseMetaDataModelLocator.payeesRawList);
+				var expensePurposeId:String = findIdForValue(String(expensePurposeComboBox.selectedItem), expenseMetaDataModelLocator.expensePurposeTypesRawList);
+				var expenseCategoryId:String = findIdForValue(String(expenseCategoryComboBox.selectedItem), expenseMetaDataModelLocator.expenseCategoriesRawList);
+				var expenseTypeId:String = findIdForValue(String(expenseTypeComboBox.selectedItem), expenseMetaDataModelLocator.expenseTypesForCategoryRawList);
+				var paymentMethodId:String = findIdForValue(String(paymentMethodComboBox.selectedItem), expenseMetaDataModelLocator.paymentMethodsRawList);
+				var bankAccountId:String = findIdForValue(String(bankAccountComboBox.selectedItem), expenseMetaDataModelLocator.bankAccountsRawList);
+				var creditCardId:String = findIdForValue(String(creditCardComboBox.selectedItem), expenseMetaDataModelLocator.creditCardsRawList);
+				var projectId:String = findIdForValue(String(projectComboBox.selectedItem), expenseMetaDataModelLocator.expenseGroupsRawList);
+				
+				var getExpenseDataEvent:GetExpenseDataEvent = new GetExpenseDataEvent(accountId, userId, startDate, endDate, payeeId, expensePurposeId,
+					expenseCategoryId, expenseTypeId, paymentMethodId, bankAccountId, creditCardId, projectId);
+				
+				getExpenseDataEvent.dispatch();
+				
+//				remoteServiceProxy.callGetExpenseData(accountId, userId, startDate, endDate, payeeId, expensePurposeId,
+//				expenseCategoryId, expenseTypeId, paymentMethodId, bankAccountId, creditCardId, projectId, handleExpenseData);
+			}
+			
+			private function handleDailyExpenseChart(event:Event):void {
+				if (expenseDataChartContainer != null) {
+					expenseDataChartContainer.removeAllChildren();
+				}
+				
+				dataViewStack.selectedChild=expenseChartsView;
+				expenseDataModelLocator.expenseChartLabelText = "Daily Expenses";
+
+//				if (expenseDataChartContainer != null) {
+//					expenseDataChartContainer.removeAllChildren();
+//					
+//					var chart:ExpenseColumnChart = new ExpenseColumnChart();
+//					chart.expenseDataView = this;
+//					expenseDataChartContainer.addChild(chart);
+//				}
+				
+				var accountId:String = Application.application.parameters.AccountId;
+				var userId:String = findIdForValue(String(userComboBox.selectedItem), expenseMetaDataModelLocator.usersRawList);
+				var startDate:Date = startDateField.text == null || startDateField.text.length == 0?null:startDateField.selectedDate;
+				var endDate:Date = endDateField.text == null || endDateField.text.length == 0?null:endDateField.selectedDate;
+				var payeeId:String = findIdForValue(String(payeeComboBox.selectedItem), expenseMetaDataModelLocator.payeesRawList);
+				var expensePurposeId:String = findIdForValue(String(expensePurposeComboBox.selectedItem), expenseMetaDataModelLocator.expensePurposeTypesRawList);
+				var expenseCategoryId:String = findIdForValue(String(expenseCategoryComboBox.selectedItem), expenseMetaDataModelLocator.expenseCategoriesRawList);
+				var expenseTypeId:String = findIdForValue(String(expenseTypeComboBox.selectedItem), expenseMetaDataModelLocator.expenseTypesForCategoryRawList);
+				var paymentMethodId:String = findIdForValue(String(paymentMethodComboBox.selectedItem), expenseMetaDataModelLocator.paymentMethodsRawList);
+				var bankAccountId:String = findIdForValue(String(bankAccountComboBox.selectedItem), expenseMetaDataModelLocator.bankAccountsRawList);
+				var creditCardId:String = findIdForValue(String(creditCardComboBox.selectedItem), expenseMetaDataModelLocator.creditCardsRawList);
+				var projectId:String = findIdForValue(String(projectComboBox.selectedItem), expenseMetaDataModelLocator.expenseGroupsRawList);
+				
+				var getExpenseDataForChartingEvent:GetExpenseDataForChartingEvent = 
+					new GetExpenseDataForChartingEvent(accountId, userId, startDate, endDate, payeeId, expensePurposeId,
+						expenseCategoryId, expenseTypeId, paymentMethodId, bankAccountId, 
+						creditCardId, projectId, 1);
+				getExpenseDataForChartingEvent.dispatch();
+				
+//				remoteServiceProxy.callGetExpenseDataForCharting(accountId, userId, startDate, endDate, payeeId, expensePurposeId,
+//				expenseCategoryId, expenseTypeId, paymentMethodId, bankAccountId, 
+//				creditCardId, projectId, 1, handleExpenseChart);
+			}
+			
+			private function getExpensesForChartItem(startDate:Date, endDate:Date):void {
+				dataViewStack.selectedChild=expenseChartsView;
+				var accountId:String = Application.application.parameters.AccountId;
+				var userId:String = findIdForValue(String(userComboBox.selectedItem), expenseMetaDataModelLocator.usersRawList);
+				var payeeId:String = findIdForValue(String(payeeComboBox.selectedItem), expenseMetaDataModelLocator.payeesRawList);
+				var expensePurposeId:String = findIdForValue(String(expensePurposeComboBox.selectedItem), expenseMetaDataModelLocator.expensePurposeTypesRawList);
+				var expenseCategoryId:String = findIdForValue(String(expenseCategoryComboBox.selectedItem), expenseMetaDataModelLocator.expenseCategoriesRawList);
+				var expenseTypeId:String = findIdForValue(String(expenseTypeComboBox.selectedItem), expenseMetaDataModelLocator.expenseTypesForCategoryRawList);
+				var paymentMethodId:String = findIdForValue(String(paymentMethodComboBox.selectedItem), expenseMetaDataModelLocator.paymentMethodsRawList);
+				var bankAccountId:String = findIdForValue(String(bankAccountComboBox.selectedItem), expenseMetaDataModelLocator.bankAccountsRawList);
+				var creditCardId:String = findIdForValue(String(creditCardComboBox.selectedItem), expenseMetaDataModelLocator.creditCardsRawList);
+				var projectId:String = findIdForValue(String(projectComboBox.selectedItem), expenseMetaDataModelLocator.expenseGroupsRawList);
+				
+				var getExpenseDataForChartItemEvent:GetExpenseDataForChartItemEvent = new GetExpenseDataForChartItemEvent(accountId, userId, startDate, endDate, payeeId, expensePurposeId,
+					expenseCategoryId, expenseTypeId, paymentMethodId, bankAccountId, creditCardId, projectId,
+					this);
+				
+				getExpenseDataForChartItemEvent.dispatch();
+				
+//				remoteServiceProxy.callGetExpenseData(accountId, userId, startDate, endDate, payeeId, expensePurposeId,
+//					expenseCategoryId, expenseTypeId, paymentMethodId, bankAccountId, 
+//					creditCardId, projectId, handleExpenseDetails);
+			}
+			
+			
+			private function handleMonthlyExpenseChart(event:Event):void {
+				
+				if (expenseDataChartContainer != null) {
+					expenseDataChartContainer.removeAllChildren();
+				}
+				
+				dataViewStack.selectedChild=expenseChartsView;
+				expenseDataModelLocator.expenseChartLabelText = "Monthly Expenses";
+								
+//				if (expenseDataChartContainer != null) {
+//					expenseDataChartContainer.removeAllChildren();
+//					
+//					var chart:ExpenseColumnChart = new ExpenseColumnChart();
+//					chart.expenseDataView = this;
+//					expenseDataChartContainer.addChild(chart);
+//				}
+				
+				var accountId:String = Application.application.parameters.AccountId;
+				var userId:String = findIdForValue(String(userComboBox.selectedItem), expenseMetaDataModelLocator.usersRawList);
+				var startDate:Date = startDateField.text == null || startDateField.text.length == 0?null:startDateField.selectedDate;
+				var endDate:Date = endDateField.text == null || endDateField.text.length == 0?null:endDateField.selectedDate;
+				var payeeId:String = findIdForValue(String(payeeComboBox.selectedItem), expenseMetaDataModelLocator.payeesRawList);
+				var expensePurposeId:String = findIdForValue(String(expensePurposeComboBox.selectedItem), expenseMetaDataModelLocator.expensePurposeTypesRawList);
+				var expenseCategoryId:String = findIdForValue(String(expenseCategoryComboBox.selectedItem), expenseMetaDataModelLocator.expenseCategoriesRawList);
+				var expenseTypeId:String = findIdForValue(String(expenseTypeComboBox.selectedItem), expenseMetaDataModelLocator.expenseTypesForCategoryRawList);
+				var paymentMethodId:String = findIdForValue(String(paymentMethodComboBox.selectedItem), expenseMetaDataModelLocator.paymentMethodsRawList);
+				var bankAccountId:String = findIdForValue(String(bankAccountComboBox.selectedItem), expenseMetaDataModelLocator.bankAccountsRawList);
+				var creditCardId:String = findIdForValue(String(creditCardComboBox.selectedItem), expenseMetaDataModelLocator.creditCardsRawList);
+				var projectId:String = findIdForValue(String(projectComboBox.selectedItem), expenseMetaDataModelLocator.expenseGroupsRawList);
+				
+				var getExpenseDataForChartingEvent:GetExpenseDataForChartingEvent = 
+					new GetExpenseDataForChartingEvent(accountId, userId, startDate, endDate, payeeId, expensePurposeId,
+						expenseCategoryId, expenseTypeId, paymentMethodId, bankAccountId, 
+						creditCardId, projectId, 2);
+				getExpenseDataForChartingEvent.dispatch();
+				
+//				remoteServiceProxy.callGetExpenseDataForCharting(accountId, userId, startDate, endDate, payeeId, expensePurposeId,
+//				expenseCategoryId, expenseTypeId, paymentMethodId, bankAccountId, 
+//				creditCardId, projectId, 2, handleExpenseChart);
+			}
+			
+//			private function handleExpenseData(result:ArrayCollection):void {			
+//				dataGrid.dataProvider = result;
+//				var total:Number = 0;
+//				for each (var obj:Object in result) {
+//				total += obj.amount as Number;
+//				}				
+//				
+//				var formatter:CurrencyFormatter = new CurrencyFormatter();
+//				
+//				formatter.precision = 2;
+//				formatter.decimalSeparatorTo = ".";
+//				formatter.decimalSeparatorFrom = ".";
+//				formatter.currencySymbol = "$";
+//				formatter.rounding = "nearest";
+//				formatter.useThousandsSeparator = true;
+//				formatter.alignSymbol = "left";
+//				formatter.useNegativeSign = true;
+//				
+//				totalLabel.text = formatter.format(total);
+//			
+//			}
+			
+//			private function handleExpenseDetails(result:ArrayCollection):void {
+//				var dataGridDialog:DataGridDialog = new DataGridDialog();
+//				dataGridDialog.dataProvider = result;
+//				
+//				var total:Number = 0;
+//				for each (var obj:Object in result) {
+//					total += obj.amount as Number;
+//				}				
+//				
+//				var formatter:CurrencyFormatter = new CurrencyFormatter();
+//				
+//				formatter.precision = 2;
+//				formatter.decimalSeparatorTo = ".";
+//				formatter.decimalSeparatorFrom = ".";
+//				formatter.currencySymbol = "$";
+//				formatter.rounding = "nearest";
+//				formatter.useThousandsSeparator = true;
+//				formatter.alignSymbol = "left";
+//				formatter.useNegativeSign = true;
+//				
+//				dataGridDialog.total = formatter.format(total);
+//				
+//				PopUpManager.addPopUp(dataGridDialog, this, true);
+//				PopUpManager.centerPopUp(dataGridDialog);
+//			}
+			
+//			private function handleExpenseChart(result:ArrayCollection):void {
+//				expenseDataChart.dataProvider = result;
+//				expenseDateChartLength = result.length;
+//			}
+			
+//			public function handleUserData(result:ArrayCollection):void {
+//				userList = result;
+//				var list:ArrayCollection = new ArrayCollection();
+//				list.addItem("All Users");
+//				for each (var user:Object in userList) {
+//				list.addItem(user.description);
+//				}
+//				userComboBox.dataProvider = list;
+//			}
+			
+//			public function handlePayeeData(result:ArrayCollection):void {
+//				payeeList = result;
+//				var list:ArrayCollection = new ArrayCollection();
+//				list.addItem("All Payees");
+//				for each (var user:Object in payeeList) {
+//				list.addItem(user.description);
+//				}
+//				payeeComboBox.dataProvider = list;
+//			}
+			
+//			public function handleCreditCardData(result:ArrayCollection):void {
+//				creditCardList = result;
+//				var list:ArrayCollection = new ArrayCollection();
+//				list.addItem("All Credit Cards");
+//				for each (var user:Object in creditCardList) {
+//				list.addItem(user.description);
+//				}
+//				creditCardComboBox.dataProvider = list;
+//			}
+			
+//			public function handleBankAccountData(result:ArrayCollection):void {
+//				bankAccountList = result;
+//				var list:ArrayCollection = new ArrayCollection();
+//				list.addItem("All Bank Accounts");
+//				for each (var user:Object in bankAccountList) {
+//				list.addItem(user.description);
+//				}
+//				bankAccountComboBox.dataProvider = list;
+//			}
+			
+//			public function handleExpenseCategoryData(result:ArrayCollection):void {
+//				expenseCategoryList = result;
+//				var list:ArrayCollection = new ArrayCollection();
+//				list.addItem("All Expense Categories");
+//				for each (var user:Object in expenseCategoryList) {
+//				list.addItem(user.description);
+//				}
+//				expenseCategoryComboBox.dataProvider = list; 	
+//			}
+			
+//			public function handleExpenseTypeData(result:ArrayCollection):void {
+//				expenseTypeList = result;
+//				var list:ArrayCollection = new ArrayCollection();
+//				list.addItem("All Expense Types");
+//				for each (var user:Object in expenseTypeList) {
+//				list.addItem(user.description);
+//				}
+//				if (expenseTypeComboBox.dataProvider == null) {
+//				expenseTypeComboBox.dataProvider = list;
+//				} else {
+//				var dp:ArrayCollection = expenseTypeComboBox.dataProvider as ArrayCollection;
+//				dp.removeAll();
+//				dp.addAll(list);
+//				}
+//			
+//			}
+			
+//			public function handleProjectData(result:ArrayCollection):void {
+//				projectList = result;
+//				var list:ArrayCollection = new ArrayCollection();
+//				list.addItem("All Projects");
+//				for each (var user:Object in projectList) {
+//				list.addItem(user.description);
+//				}
+//				projectComboBox.dataProvider = list;
+//			}
+			
+//			public function handlePaymentMethodData(result:ArrayCollection):void {
+//				paymentMethodList = result;
+//				var list:ArrayCollection = new ArrayCollection();
+//				list.addItem("All Payment Methods");
+//				for each (var user:Object in paymentMethodList) {
+//				list.addItem(user.description);
+//				}
+//				paymentMethodComboBox.dataProvider = list;
+//			}
+			
+//			public function handleExpensePurposeData(result:ArrayCollection):void {
+//				expensePurposeList = result;
+//				var list:ArrayCollection = new ArrayCollection();
+//				list.addItem("All Expense Purposes");
+//				for each (var user:Object in expensePurposeList) {
+//				list.addItem(user.description);
+//				}
+//				expensePurposeComboBox.dataProvider = list;
+//			}
+			
+			private function findIdForValue(value:String, list:ArrayCollection):String {
+				for each (var item:Object in list) {
+					if (item.description == value) {
+						return item.id.toString();
+					}
+				}	
+				
+				return null;
+			}
+			
+			private function handlePaymentMethodChange(event:Event):void {
+				bankAccountLabel.includeInLayout = false;
+				bankAccountLabel.visible = false;
+				bankAccountComboBox.includeInLayout = false;
+				bankAccountComboBox.visible = false;
+				bankAccountGridRow.includeInLayout = false;
+				bankAccountGridRow.visible = false;
+				creditCardLabel.includeInLayout = false;
+				creditCardLabel.visible = false;
+				creditCardComboBox.includeInLayout = false;
+				creditCardComboBox.visible = false;
+				creditCardGridRow.includeInLayout = false;
+				creditCardGridRow.visible = false;
+				
+				bankAccountComboBox.selectedIndex = 0;
+				creditCardComboBox.selectedIndex = 0;
+				
+				if (paymentMethodComboBox.selectedItem == "Check" || 
+					paymentMethodComboBox.selectedItem == "Debit" ||
+					paymentMethodComboBox.selectedItem == "E-Payment") {
+					bankAccountGridRow.includeInLayout = true;
+					bankAccountGridRow.visible = true;
+					bankAccountLabel.includeInLayout = true;
+					bankAccountLabel.visible = true;
+					bankAccountComboBox.includeInLayout = true;
+					bankAccountComboBox.visible = true;		
+				} else if (paymentMethodComboBox.selectedItem == "Credit") {
+					creditCardGridRow.includeInLayout = true;
+					creditCardGridRow.visible = true;
+					creditCardLabel.includeInLayout = true;
+					creditCardLabel.visible = true;
+					creditCardComboBox.includeInLayout = true;
+					creditCardComboBox.visible = true;
+				} 
+			}
+			
+			private function handleSwitchToDataView(event:Event):void {
+				dataViewStack.selectedChild = dataView;
+			}
+			
+			private function handleClearDates(event:Event):void {
+				startDateField.selectedDate = null;
+				endDateField.selectedDate = null;
+			}
+			
+			private function handleCategoryChanged(event:Event):void {
+				var expenseCategoryId:String = findIdForValue(
+					String(expenseCategoryComboBox.selectedItem), expenseMetaDataModelLocator.expenseCategoriesRawList);
+				
+				if (expenseCategoryId == null) {
+					expenseTypeList = new ArrayCollection();
+					var dp:ArrayCollection = expenseTypeComboBox.dataProvider as ArrayCollection;
+					dp.removeAll();
+				} else {        	
+//					remoteServiceProxy.callGetExpenseTypesForCategory(expenseCategoryId, handleExpenseTypeData);
+					var getExpenseTypesForCategoryEvent:GetExpenseTypesForCategoryEvent =
+						new GetExpenseTypesForCategoryEvent(expenseCategoryId);
+					getExpenseTypesForCategoryEvent.dispatch();
+				}
+				
+			}	
+			
+			private function handleChartItemClicked(ev:ChartItemEvent):void {				
+				var startDate:Date = ev.hitData.item.date;
+				
+				dataViewStack.selectedChild=expenseChartsView;
+				
+				if (expenseDataModelLocator.expenseChartLabelText == "Daily Expenses") {
+					getExpensesForChartItem(startDate, startDate);
+				} else {
+					var endDate:Date = new Date(startDate.fullYear, 
+						startDate.month + 1, 
+						startDate.date, 
+						startDate.hours, 
+						startDate.minutes, 
+						startDate.seconds, 
+						startDate.milliseconds);
+					
+					endDate = new Date(endDate.fullYear, 
+						endDate.month, 
+						endDate.date - 1, 
+						endDate.hours, 
+						endDate.minutes, 
+						endDate.seconds, 
+						endDate.milliseconds);					
+					
+					getExpensesForChartItem(startDate, endDate);
+				}
+			}
+			
+		]]>
+	</mx:Script>
+	
+	<mx:VBox x="0" y="0" height="100%" width="760" verticalScrollPolicy="off" horizontalScrollPolicy="off">
+		<mx:ViewStack id="dataViewStack" width="758" height="100%">
+			<mx:VBox id="criteriaView" width="100%" height="100%" paddingLeft="10">
+				<mx:HBox width="100%" height="38" verticalScrollPolicy="off" horizontalScrollPolicy="off" verticalAlign="middle">
+					<mx:Label text="Specify search criteria" fontSize="14" color="#0000FF" fontWeight="bold"/>
+				</mx:HBox>
+				<mx:HBox width="100%" horizontalScrollPolicy="off" verticalScrollPolicy="off">
+					<mx:Label text="Start Date" width="99" fontSize="12" fontWeight="bold"/>
+					<mx:DateField id="startDateField"/>
+					<mx:Spacer width="30"/>
+					<mx:Label text="End Date" width="100" fontSize="12" fontWeight="bold"/>
+					<mx:DateField id="endDateField"/>
+					<mx:LinkButton label="clear dates" fontSize="10" color="#0000FF" textDecoration="underline" click="handleClearDates(event);"/>
+				</mx:HBox>
+				<mx:HBox width="100%" height="25" horizontalScrollPolicy="off" verticalScrollPolicy="off">
+					<mx:Label text="User" fontSize="12" width="130" fontWeight="bold"/>
+					<mx:ComboBox id="userComboBox" fontSize="12" dataProvider="{expenseMetaDataModelLocator.users}"></mx:ComboBox>
+				</mx:HBox>
+				<mx:HBox width="100%" height="25" horizontalScrollPolicy="off" verticalScrollPolicy="off">
+					<mx:Label text="Project" fontWeight="bold" fontSize="12" width="130"/>
+					<mx:ComboBox id="projectComboBox" fontSize="12" dataProvider="{expenseMetaDataModelLocator.expenseGroups}"></mx:ComboBox>
+				</mx:HBox>
+				<mx:HBox width="100%" height="25" horizontalScrollPolicy="off" verticalScrollPolicy="off">
+					<mx:Label text="Expense Category" fontWeight="bold" fontSize="12" width="130"/>
+					<mx:ComboBox id="expenseCategoryComboBox" fontSize="12" dataProvider="{expenseMetaDataModelLocator.expenseCategories}" 
+								 change="handleCategoryChanged(event)"></mx:ComboBox>
+				</mx:HBox>
+				<mx:HBox width="100%" height="25" horizontalScrollPolicy="off" verticalScrollPolicy="off">
+					<mx:Label text="Expense Type" fontWeight="bold" fontSize="12" width="130"/>
+					<mx:ComboBox id="expenseTypeComboBox" fontSize="12" dataProvider="{expenseMetaDataModelLocator.expenseTypesForCategory}"></mx:ComboBox>
+				</mx:HBox>
+				<mx:HBox width="100%" height="25" horizontalScrollPolicy="off" verticalScrollPolicy="off">
+					<mx:Label text="Payee" fontWeight="bold" fontSize="12" width="130"/>
+					<mx:ComboBox id="payeeComboBox" fontSize="12" dataProvider="{expenseMetaDataModelLocator.payees}"></mx:ComboBox>
+				</mx:HBox>
+				<mx:HBox width="100%" height="25" horizontalScrollPolicy="off" verticalScrollPolicy="off">
+					<mx:Label text="Expense Purpose" fontWeight="bold" fontSize="12" width="130"/>
+					<mx:ComboBox id="expensePurposeComboBox" fontSize="12" dataProvider="{expenseMetaDataModelLocator.expensePurposeTypes}"></mx:ComboBox>
+				</mx:HBox>
+				<mx:HBox width="100%" horizontalScrollPolicy="off" verticalScrollPolicy="off" height="25">
+					<mx:Label text="Payment Method" fontWeight="bold" fontSize="12" width="130"/>
+					<mx:ComboBox id="paymentMethodComboBox" 
+								 change="handlePaymentMethodChange(event);" fontSize="12"
+								 dataProvider="{expenseMetaDataModelLocator.paymentMethods}"></mx:ComboBox>
+				</mx:HBox>
+				<mx:HBox width="100%" horizontalScrollPolicy="off" verticalScrollPolicy="off" height="25" id="bankAccountGridRow" includeInLayout="false" visible="false">
+					<mx:Label text="Bank Account" id="bankAccountLabel" fontWeight="bold" fontSize="14" includeInLayout="true" visible="true" width="130"/>
+					<mx:ComboBox id="bankAccountComboBox" includeInLayout="true" 
+								 visible="true" dataProvider="{expenseMetaDataModelLocator.bankAccounts}"></mx:ComboBox>
+				</mx:HBox>
+				<mx:HBox width="100%" horizontalScrollPolicy="off" verticalScrollPolicy="off" height="25" id="creditCardGridRow" includeInLayout="false" visible="false">
+					<mx:Label text="Credit Card" id="creditCardLabel" fontWeight="bold" fontSize="14" includeInLayout="true" visible="true" width="130"/>
+					<mx:ComboBox id="creditCardComboBox" includeInLayout="true" visible="true"
+								 dataProvider="{expenseMetaDataModelLocator.creditCards}"></mx:ComboBox>
+				</mx:HBox>
+				<mx:HBox width="100%">
+					<mx:Spacer/>
+				</mx:HBox>
+				<mx:HBox width="100%" height="36" verticalAlign="middle" paddingLeft="10">
+					<mx:Button label="Search" id="searchButton" click="handleSearch(event);"/>
+					<mx:LinkButton label="Switch to data view" color="#0000FF" textDecoration="underline" click="handleSwitchToDataView(event);"/>
+					<mx:Button label="Daily Expenses Chart" click="handleDailyExpenseChart(event);"/>
+					<mx:Button label="Monthly Expenses Chart" click="handleMonthlyExpenseChart(event);"/>
+				</mx:HBox>
+				
+			</mx:VBox>
+			<mx:VBox id="dataView" width="100%" height="100%" paddingRight="10" paddingLeft="10" paddingBottom="10" paddingTop="10">
+				<mx:HBox width="100%" horizontalScrollPolicy="off" verticalScrollPolicy="off" paddingLeft="10" horizontalAlign="right" paddingRight="10" height="26">
+					<mx:Button label="Edit Search Criteria" click="handleEditSearchCriteria(event);"/>
+				</mx:HBox>
+				<mx:DataGrid id="dataGrid" width="100%" height="100%" dataProvider="{expenseDataModelLocator.expenseData}">
+					<mx:columns>
+						<mx:DataGridColumn headerText="Date" dataField="date">
+							<mx:itemRenderer>    											  											
+								<mx:Component>							                    	 							                    								                    	
+									<mx:Label  text="{format(data.date)}"  fontWeight="bold" fontSize="12">
+										<mx:Script>
+											<![CDATA[
+											import mx.formatters.DateFormatter;
+											private function format(data:Object):String {
+											var formatter:DateFormatter = new DateFormatter();
+											formatter.formatString = "MM/DD/YYYY";
+											return formatter.format(data);
+											}
+											
+											]]>
+										</mx:Script>
+									</mx:Label>
+								</mx:Component>
+							</mx:itemRenderer>
+						</mx:DataGridColumn>
+						<mx:DataGridColumn headerText="Amount" dataField="amount">
+							<mx:itemRenderer>    											  											
+								<mx:Component>							                    	 							                    								                    	
+									<mx:Label  text="{format(data.amount)}"  fontWeight="bold" fontSize="12">
+										<mx:Script>
+											<![CDATA[
+											import mx.formatters.CurrencyFormatter;
+											private function format(data:Object):String {
+											var formatter:CurrencyFormatter = new CurrencyFormatter();
+											
+											formatter.precision = 2;
+											formatter.decimalSeparatorTo = ".";
+											formatter.decimalSeparatorFrom = ".";
+											formatter.currencySymbol = "$";
+											formatter.rounding = "nearest";
+											formatter.useThousandsSeparator = true;
+											formatter.alignSymbol = "left";
+											formatter.useNegativeSign = true;
+											
+											return formatter.format(data);
+											}
+											
+											]]>
+										</mx:Script>
+									</mx:Label>
+								</mx:Component>
+							</mx:itemRenderer>
+						</mx:DataGridColumn>
+						<mx:DataGridColumn headerText="Payment Method" dataField="paymentMethod"/>
+						<mx:DataGridColumn headerText="Payee" dataField="payee"/>
+						<mx:DataGridColumn headerText="Group" dataField="group"/>
+						<mx:DataGridColumn headerText="Expense Category" dataField="expenseCategory"/>
+						<mx:DataGridColumn headerText="Expense Type" dataField="expenseType"/>
+						<mx:DataGridColumn headerText="User" dataField="userName"/>
+					</mx:columns>
+				</mx:DataGrid>
+				<mx:HBox width="100%" horizontalScrollPolicy="off" verticalScrollPolicy="off" verticalAlign="middle" horizontalAlign="right" height="40" paddingBottom="10" paddingLeft="10" paddingRight="10" paddingTop="10">
+					<mx:Label text="Total"/>
+					<mx:Label id="totalLabel" text="{expenseDataModelLocator.expenseDataTotal}"/>
+				</mx:HBox>
+			</mx:VBox>
+			<mx:VBox id="expenseChartsView" width="100%" height="100%">
+				<mx:VBox width="100%" height="100%" horizontalScrollPolicy="off" verticalScrollPolicy="off">
+					<mx:HBox width="100%" horizontalScrollPolicy="off" verticalScrollPolicy="off" paddingLeft="10" horizontalAlign="right" paddingRight="10" height="26">
+						<mx:Label id="expenseChartLabel" text="{expenseDataModelLocator.expenseChartLabelText}"/>
+						<mx:Spacer width="100%"/>
+						<mx:Button label="Edit Search Criteria" click="handleEditSearchCriteria(event);"/>
+					</mx:HBox>
+					
+					<mx:VBox id="expenseDataChartContainer" width="100%" height="100%"
+							 horizontalScrollPolicy="off" verticalScrollPolicy="off">
+						
+						<reports:ExpenseColumnChart id="expenseDataChart" expenseDataView="{this}"/>
+					</mx:VBox>
+					
+				</mx:VBox>
+			</mx:VBox>
+		</mx:ViewStack>
+	</mx:VBox>
+</mx:Canvas>  

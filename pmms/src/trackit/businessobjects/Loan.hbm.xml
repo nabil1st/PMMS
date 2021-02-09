@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+  <typedef class="trackit.util.GenericEnumUserType" name="paymentMethod">
+    <param name="enumClass">trackit.businessobjects.PaymentMethod</param>
+    <param name="identifierMethod">toInt</param>
+    <param name="valueOfMethod">fromInt</param>
+  </typedef>
+  <typedef class="trackit.util.GenericEnumUserType" name="transactionType">
+    <param name="enumClass">trackit.businessobjects.TransactionType</param>
+    <param name="identifierMethod">toInt</param>
+    <param name="valueOfMethod">fromInt</param>
+  </typedef>
+  <class name="trackit.businessobjects.Loan" table="LOAN">
+    <id column="ID" name="id">
+      <generator class="native"/>
+    </id>
+    <property name="date"/>
+    <property name="amount"/>
+    <property column="PAYMENT_METHOD_ID" name="paymentMethod" type="paymentMethod"/>
+    <property column="BANK_ACCOUNT_ID" name="bankAccountId"/>
+    <property column="CHECK_NUMBER" name="checkNumber"/>
+    <property column="CREDIT_CARD_ID" name="creditCardId"/>
+    <property column="PAYEE_ID" name="payeeId"/>
+    <property column="BORROWER_ID" name="borrowerId"/>
+    <property column="TRANSACTION_ID" name="transactionId"/>
+    <property name="description"/>
+    <property column="USER_ID" name="userId"/>
+    <property column="TRANSACTION_TYPE_ID" name="transactionType" type="transactionType"/>
+    <property column="GROUP_ID" name="groupId"/>
+    <set lazy="true" name="loanPayments" table="LOAN_CURRENCY_ON_HAND">
+      <key column="LOAN_ID"/>
+      <many-to-many class="trackit.businessobjects.CurrencyOnHand" column="CURRENCY_ON_HAND_ID"/>
+    </set>
+  </class>
+</hibernate-mapping>

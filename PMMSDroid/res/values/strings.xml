@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+    <string name="app_name">ExpenseTrackerME</string>
+    <string name="new_category_saved_msg">Category Saved</string>
+    <string name="new_expense_type_saved_msg">Expense Type Saved</string>
+    <string name="category_exists_message">Category already exists</string>
+    <string name="credit_card_exists_message">Credit card already exists</string>
+    <string name="bank_account_exists_message">Credit card already exists</string>
+    <string name="expense_type_exists_message">Expense type already exists</string>
+    <string name="payee_exists_message">Payee already exists</string>
+    <string name="expense_group_exists_message">Expense group already exists</string>
+    <string name="payee_prompt">Select Payee</string>
+    <string name="expense_group_prompt">Select Expense Group</string>
+    <string name="payment_method_prompt">Select Payment Method</string>
+    <string name="credit_card_prompt">Select Credit Card</string>
+    <string name="bank_accounts_prompt">Select Bank Account</string>
+    <string name="check_prompt">Enter Check Info</string>
+</resources>

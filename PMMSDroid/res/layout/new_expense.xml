@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+android:id="@+id/linlayoutBase"
+android:layout_width="fill_parent"
+android:layout_height="fill_parent"
+android:orientation="vertical"
+xmlns:android="http://schemas.android.com/apk/res/android"
+>
+
+		<ScrollView
+		android:id="@+id/scrollview"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:layout_weight="1"
+		>
+		
+		<LinearLayout
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+
+<TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:text="New Expense"
+            android:textColor="#FF6666"
+            android:typeface="monospace" android:textSize="25sp"
+            />
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:padding="5px" android:shrinkColumns="1">
+    <TableRow>
+        <TextView
+            android:id="@+id/label1"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:text="Expense Date:"/>
+
+        <Button
+            android:id="@+id/change_date"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="Change" />
+    </TableRow>
+
+    <TableRow>
+        <TextView
+            android:id="@+id/label1"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:text="Expense Type:"/>
+
+        <Button
+            android:id="@+id/select_expense_type"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="Select" />
+    </TableRow>
+    
+    <TableRow>
+        <TextView
+            android:id="@+id/label2"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:text="Expense Amount:"            
+            />
+
+        <EditText
+            android:id="@+id/amount"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:background="@android:drawable/editbox_background"
+            android:height="40px" android:numeric="decimal" android:width="50px"/>
+
+        
+    </TableRow>
+
+    <TableRow>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Payee:"
+        />
+
+        <Spinner
+            android:id="@+id/payees_spinner"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:drawSelectorOnTop="true"
+            android:prompt="@string/payee_prompt"
+        />
+
+    </TableRow>
+
+    <TableRow>        
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Expense Group:"
+        />
+
+        <Spinner
+            android:id="@+id/expense_groups_spinner"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:drawSelectorOnTop="true"
+            android:prompt="@string/expense_group_prompt"
+        />
+
+    </TableRow>
+
+    <TableRow>       
+    	<LinearLayout android:orientation="vertical"> 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dip"
+            android:text="Payment Method:"
+        />
+
+        <TextView
+            android:id="@+id/payment_method_summary"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dip"
+            android:text=""
+        />
+        </LinearLayout>
+		<Spinner
+            android:id="@+id/payment_methods_spinner"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:drawSelectorOnTop="true"
+            android:prompt="@string/payment_method_prompt"
+        />
+    </TableRow>
+
+	
+    
+
+	<TableRow>
+    <Button
+            android:id="@+id/photo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Photo" android:visibility="invisible"/>
+	</TableRow>
+    
+</TableLayout>
+<LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+
+        <Button
+            android:id="@+id/ok"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="OK" />
+
+        <Button
+            android:id="@+id/cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Cancel" />
+
+    </LinearLayout>
+    </LinearLayout>
+</ScrollView>
+</LinearLayout>

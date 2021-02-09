@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+  <typedef class="trackit.util.GenericEnumUserType" name="paymentMethod">
+    <param name="enumClass">trackit.businessobjects.PaymentMethod</param>
+    <param name="identifierMethod">toInt</param>
+    <param name="valueOfMethod">fromInt</param>
+  </typedef>
+  <typedef class="trackit.util.GenericEnumUserType" name="expensePurpose">
+    <param name="enumClass">trackit.businessobjects.ExpensePurpose</param>
+    <param name="identifierMethod">toInt</param>
+    <param name="valueOfMethod">fromInt</param>
+  </typedef>
+  <class name="trackit.businessobjects.Expense" table="EXPENSE">
+    <id column="EXPENSE_ID" name="id">
+      <generator class="native"/>
+    </id>
+    <property name="date"/>
+    <property name="amount"/>
+    <property column="PAYMENT_METHOD_ID" name="paymentMethod" type="paymentMethod"/>
+    <property column="BANK_ACCOUNT_ID" name="bankAccountId"/>
+    <property column="CHECK_NUMBER" name="checkNumber"/>
+    <property column="CREDIT_CARD_ID" name="creditCardId"/>
+    <property column="EXPENSE_GROUP_ID" name="expenseGroupId"/>
+    <property column="EXPENSE_TYPE_ID" name="expenseTypeId"/>
+    <property column="PAYEE_ID" name="payeeId"/>
+    <property column="MONEY_ORDER_ID" name="moneyOrderId"/>
+    <property name="description"/>
+    <property column="USER_ID" name="userId"/>
+    <property column="EXPENSE_PURPOSE_ID" name="expensePurpose" type="expensePurpose"/>
+    <set lazy="true" name="expenseItems" table="EXPENSE_EXPENSE_ITEM">
+      <key column="EXPENSE_ID"/>
+      <many-to-many class="trackit.businessobjects.ExpenseItem" column="EXPENSE_ITEM_ID"/>
+    </set>
+  </class>
+</hibernate-mapping>

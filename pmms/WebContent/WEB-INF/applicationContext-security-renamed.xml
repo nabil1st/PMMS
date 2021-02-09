@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+  - Sample namespace-based configuration
+  -
+  -->
+
+
+<beans:beans
+	xmlns="http://www.springframework.org/schema/security"
+    xmlns:beans="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+                        http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.0.xsd">
+
+	<global-method-security
+		secured-annotations="enabled">
+	</global-method-security>
+
+	<http
+		auto-config="true"
+		access-denied-page="/WEB-INF/jsp/AccessDenied.jsp">
+
+		<!--<intercept-url
+			pattern="/protected**"
+			access="ROLE_SUPERVISOR,ROLE_USER,ROLE_TELLER" />-->
+                <intercept-url
+			pattern="/*/welcomeJSF.jsf"
+                        access="IS_AUTHENTICATED_ANONYMOUSLY"
+			 />
+
+                <intercept-url
+			pattern="/home.jsp"
+                        access="IS_AUTHENTICATED_ANONYMOUSLY"
+			 />
+
+                <intercept-url
+			pattern="/AccountUsers.*"
+                        access="ROLE_CAN_VIEW_USER_INFO"
+			 />
+
+                <intercept-url
+			pattern="/*Bank*.*"
+                        access="ROLE_CAN_VIEW_BANK_INFO"
+			 />
+
+                <intercept-url
+			pattern="/*CreditCard*.*"
+                        access="ROLE_CAN_VIEW_CREDIT_CARD_INFO"
+			 />
+
+                <intercept-url
+			pattern="/*Expense*.*"
+                        access="ROLE_CAN_VIEW_EXPENSE_INFO"
+			 />
+
+                <intercept-url
+			pattern="/*User*.*"
+                        access="ROLE_CAN_VIEW_USER_INFO"
+			 />
+
+                <intercept-url
+			pattern="/*Loan*.*"
+                        access="ROLE_CAN_VIEW_LOAN_INFO"
+			 />
+
+                <intercept-url
+			pattern="/**"
+                        access="ROLE_CAN_VIEW_HOME_PAGE"
+			 />
+
+		<!--<intercept-url
+			pattern="/**"
+			access="IS_AUTHENTICATED_ANONYMOUSLY" />-->
+                 <!--<intercept-url
+			pattern="/welcomeJSF.jsf"
+                        access="IS_AUTHENTICATED_ANONYMOUSLY"
+			 />-->
+                 
+		<form-login
+			login-processing-url="/j_spring_security_check"
+			login-page="/WEB-INF/jsp/welcomeJSF.jsf"
+			default-target-url="/WEB-INF/jsp/HomePage.jsf"
+			authentication-failure-url="/WEB-INF/jsp/LoginFailed.jsf" />
+		<logout
+			logout-url="/WEB-INF/jsp/logout.jsp"
+			logout-success-url="/" />
+
+	</http>
+
+	<!--
+    Usernames/Passwords are
+        rod/koala
+        dianne/emu
+        scott/wombat
+        peter/opal
+    -->
+
+    <beans:bean id="userDetailsService"
+          class="trackit.service.impl.UserDetailsServiceImpl">
+        <beans:property name="userDao">
+            <beans:ref bean="userDao"/>
+        </beans:property>
+        <!--<beans:constructor-arg ref="userRepository"/>-->
+    </beans:bean>
+
+    <!--<beans:bean id="userRepository"
+           class="trackit.dao.hibernate.UserDaoHibernateImpl"/>-->
+    <authentication-manager>
+        <authentication-provider user-service-ref="userDetailsService"/>
+    </authentication-manager>
+
+
+    <!--<authentication-manager>
+    <authentication-provider>
+        <password-encoder hash="md5"/>
+        <user-service>
+            <user name="rod" password="a564de63c2d0da68cf47586ee05984d7" authorities="ROLE_SUPERVISOR, ROLE_USER, ROLE_TELLER" />
+            <user name="dianne" password="65d15fe9156f9c4bbffd98085992a44e" authorities="ROLE_USER,ROLE_TELLER" />
+            <user name="scott" password="2b58af6dddbd072ed27ffc86725d7d3a" authorities="ROLE_USER" />
+            <user name="peter" password="22b5c9accc6e1ba628cedc63a72d57f8" authorities="ROLE_USER" />
+	    </user-service>
+	</authentication-provider>
+        </authentication-manager>-->
+</beans:beans>
+
+
+
+
+
+<!--
+<beans:beans xmlns="http://www.springframework.org/schema/security"
+    xmlns:beans="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+                        http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.0.xsd">
+
+    <global-method-security pre-post-annotations="enabled">
+         AspectJ pointcut expression that locates our "post" method and applies security that way
+        <protect-pointcut expression="execution(* bigbank.*Service.post*(..))" access="ROLE_TELLER"/>
+
+    </global-method-security>
+
+    <http use-expressions="true">
+        <intercept-url pattern="/secure/extreme/**" access="hasRole('ROLE_SUPERVISOR')"/>
+        <intercept-url pattern="/faces/welcomeJSF.jsp" filters="none" />
+        <intercept-url pattern="/**/Expenses.jsp" access="hasRole('ROLE_SUPERVISOR')"/>
+        <intercept-url pattern="/**" access="isAuthenticated()" />
+
+
+        <intercept-url pattern="/**/LogMeIn*" access="ROLE_ANONYMOUS" />
+         Disable web URI authorization, as we're using <global-method-security> and have @Secured the services layer instead
+        <intercept-url pattern="/listAccounts.html" access="isRememberMe()" />
+        <intercept-url pattern="/post.html" access="hasRole('ROLE_TELLER')" />
+
+        <intercept-url pattern="/**" access="permitAll" />
+        <form-login />
+
+
+        default-target-url is the URL the user will be taken to after loging in
+        <form-login login-processing-url="/j_spring_security_check"
+                    login-page="/faces/welcomeJSF.jsp"
+                             default-target-url="/faces/HomePage.jsp"/>
+
+        <anonymous />
+        <logout/>
+        <remember-me />
+
+    Uncomment to enable X509 client authentication support
+        <x509 />
+
+         Uncomment to limit the number of sessions a user can have
+        <session-management invalid-session-url="/faces/timeout.jsp">
+            <concurrency-control max-sessions="1" error-if-maximum-exceeded="true" />
+        </session-management>
+
+
+
+    </http>
+
+    <beans:bean id="userDetailsService"
+          class="trackit.service.impl.UserDetailsServiceImpl">
+        <beans:property name="userDao">
+            <beans:ref bean="userDao"/>
+        </beans:property>
+        <beans:constructor-arg ref="userRepository"/>
+    </beans:bean>
+
+    <beans:bean id="userRepository"
+           class="trackit.dao.hibernate.UserDaoHibernateImpl"/>
+    <authentication-manager>
+            <authentication-provider user-service-ref="userDetailsService"/>
+        </authentication-manager>
+
+
+    Usernames/Passwords are
+        rod/koala
+        dianne/emu
+        scott/wombat
+        peter/opal
+
+    <authentication-manager>
+        <authentication-provider>
+            <password-encoder hash="md5"/>
+            <user-service>
+                <user name="rod" password="a564de63c2d0da68cf47586ee05984d7" authorities="ROLE_SUPERVISOR, ROLE_USER, ROLE_TELLER" />
+                <user name="dianne" password="65d15fe9156f9c4bbffd98085992a44e" authorities="ROLE_USER,ROLE_TELLER" />
+                <user name="scott" password="2b58af6dddbd072ed27ffc86725d7d3a" authorities="ROLE_USER" />
+                <user name="peter" password="22b5c9accc6e1ba628cedc63a72d57f8" authorities="ROLE_USER" />
+            </user-service>
+        </authentication-provider>
+    </authentication-manager>
+
+</beans:beans>
+
+-->

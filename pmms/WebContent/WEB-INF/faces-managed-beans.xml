@@ -1,0 +1,103 @@
+<?xml version="1.0"?>
+<!DOCTYPE faces-config PUBLIC "-//Sun Microsystems, Inc.//DTD JavaServer Faces Config 1.0//EN"
+                              "http://java.sun.com/dtd/web-facesconfig_1_0.dtd">
+<faces-config>
+  <managed-bean>
+    <description>
+      Managed bean that is used as an application scope cache
+    </description>
+    <managed-bean-name>applicationBean</managed-bean-name>
+    <managed-bean-class>trackit.backingbeans.ApplicationBean</managed-bean-class>
+    <managed-bean-scope>application</managed-bean-scope>
+    <!--managed-property>
+    	<property-name>productsPerPage</property-name>
+    	<value>6</value>
+    </managed-property>
+    <managed-property>
+    	<property-name>productImageDirUri</property-name>
+    	<value>TOMCAT_HOME\webapps\catalog\images\products</value>
+    </managed-property>
+    <managed-property>
+    	<property-name>imageUploadResultPage</property-name>
+    	<value>uploadImageResult.jsf</value>
+    </managed-property> 
+    <managed-property>
+    	<property-name>serviceLocator</property-name>
+    	<value>#{serviceLocatorBean}</value>
+    </managed-property-->    
+  </managed-bean>
+  
+  <managed-bean>
+    <description>
+      Managed bean that is used as a session scope cache
+    </description>
+    <managed-bean-name>sessionBean</managed-bean-name>
+    <managed-bean-class>trackit.backingbeans.SessionBean</managed-bean-class>
+    <managed-bean-scope>session</managed-bean-scope>
+  </managed-bean>
+  
+  <managed-bean>
+    <description>
+      Service locator of the business services
+    </description>
+    <managed-bean-name>serviceLocatorBean</managed-bean-name>
+    <managed-bean-class>trackit.backingbeans.ServiceLocatorBean</managed-bean-class>
+    <managed-bean-scope>application</managed-bean-scope>
+  </managed-bean>
+  
+  <managed-bean>
+    <description>
+      Backing bean that contains user informaiton.
+    </description>
+    <managed-bean-name>userBean</managed-bean-name>
+    <managed-bean-class>trackit.backingbeans.UserBean</managed-bean-class>
+    <managed-bean-scope>session</managed-bean-scope>
+    <managed-property>
+    	<property-name>serviceLocator</property-name>
+    	<value>#{serviceLocatorBean}</value>
+    </managed-property> 
+  </managed-bean>
+
+  <!--managed-bean>
+    <description>
+      Backing bean that contains product information.
+    </description>
+    <managed-bean-name>productBean</managed-bean-name>
+    <managed-bean-class>catalog.view.bean.ProductBean</managed-bean-class>
+    <managed-bean-scope>request</managed-bean-scope>    
+    <managed-property>
+    	<property-name>id</property-name>
+    	<value>#{param.productId}</value>
+    </managed-property> 
+    <managed-property>
+    	<property-name>serviceLocator</property-name>
+    	<value>#{serviceLocatorBean}</value>
+    </managed-property> 
+  </managed-bean-->
+  
+  <!--managed-bean>
+    <description>
+      Backing bean that contains a list of product.
+    </description>
+    <managed-bean-name>productListBean</managed-bean-name>
+    <managed-bean-class>catalog.view.bean.ProductListBean</managed-bean-class>
+    <managed-bean-scope>session</managed-bean-scope>
+    <managed-property>
+    	<property-name>serviceLocator</property-name>
+    	<value>#{serviceLocatorBean}</value>
+    </managed-property> 
+  </managed-bean-->
+  
+  <!--managed-bean>
+    <description>
+      Backing bean that contains message information.
+    </description>
+    <managed-bean-name>messageBean</managed-bean-name>
+    <managed-bean-class>catalog.view.bean.MessageBean</managed-bean-class>
+    <managed-bean-scope>request</managed-bean-scope>
+    <managed-property>
+    	<property-name>serviceLocator</property-name>
+    	<value>#{serviceLocatorBean}</value>
+    </managed-property>     
+  </managed-bean-->
+</faces-config>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"	   
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd">        
+        
+        
+	<!--<bean id="reportsService"
+      	class="trackit.web.service.ReportsServiceImpl">	
+      	<property name="expenseService">
+            <ref bean="expenseService"/>
+        </property>
+        <property name="expenseCategoryService">
+            <ref bean="expenseCategoryService"/>
+        </property>
+        <property name="payeeService">
+            <ref bean="payeeService"/>
+        </property>
+        <property name="userService">
+            <ref bean="userService"/>
+        </property>
+        <property name="creditCardService">
+            <ref bean="creditCardService"/>
+        </property>
+        <property name="bankAccountService">
+            <ref bean="bankAccountService"/>
+        </property>
+        <property name="expenseGroupService">
+            <ref bean="expenseGroupService"/>
+        </property>	
+	</bean>
+-->
+</beans>
+

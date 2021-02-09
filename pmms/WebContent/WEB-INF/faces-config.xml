@@ -1,0 +1,1950 @@
+<?xml version='1.0' encoding='UTF-8'?>
+
+<!-- =========== FULL CONFIGURATION FILE ================================== -->
+
+<faces-config version="1.2" 
+    xmlns="http://java.sun.com/xml/ns/javaee" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+    xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_1_2.xsd">
+    
+    
+    <application>
+        <variable-resolver>
+            org.springframework.web.jsf.DelegatingVariableResolver
+        </variable-resolver>
+    </application>
+    
+    <managed-bean>
+    <description>
+      Managed bean that is used as an application scope cache
+    </description>
+    <managed-bean-name>expenseListBean</managed-bean-name>
+    <managed-bean-class>trackit.backingbeans.ExpenseListBean</managed-bean-class>
+    <managed-bean-scope>session</managed-bean-scope>
+
+    <managed-property>
+    	<property-name>serviceLocator</property-name>
+    	<value>#{serviceLocatorBean}</value>
+    </managed-property>
+    </managed-bean>
+    
+    
+    <managed-bean>
+    <description>
+      Managed bean that is used as an application scope cache
+    </description>
+    <managed-bean-name>cashTransferListBean</managed-bean-name>
+    <managed-bean-class>trackit.backingbeans.CashTransferListBean</managed-bean-class>
+    <managed-bean-scope>request</managed-bean-scope>
+
+    <managed-property>
+    	<property-name>serviceLocator</property-name>
+    	<value>#{serviceLocatorBean}</value>
+    </managed-property>
+    </managed-bean>
+    
+    
+
+    <managed-bean>
+    <description>
+      Managed bean that is used as an application scope cache
+    </description>
+    <managed-bean-name>expenseItemListBean</managed-bean-name>
+    <managed-bean-class>trackit.backingbeans.ExpenseItemListBean</managed-bean-class>
+    <managed-bean-scope>session</managed-bean-scope>
+
+    <managed-property>
+    	<property-name>serviceLocator</property-name>
+    	<value>#{serviceLocatorBean}</value>
+    </managed-property>
+    </managed-bean>
+    
+    <managed-bean>
+    <description>
+      Managed bean that is used as an application scope cache
+    </description>
+    <managed-bean-name>expenseBean</managed-bean-name>
+    <managed-bean-class>trackit.backingbeans.ExpenseBean</managed-bean-class>
+    <managed-bean-scope>session</managed-bean-scope>
+
+    <managed-property>
+    	<property-name>serviceLocator</property-name>
+    	<value>#{serviceLocatorBean}</value>
+    </managed-property>
+    </managed-bean>
+    
+    <managed-bean>
+    <description>
+      Managed bean that is used as an application scope cache
+    </description>
+    <managed-bean-name>itemizedExpenseBean</managed-bean-name>
+    <managed-bean-class>trackit.backingbeans.ItemizedExpenseBean</managed-bean-class>
+    <managed-bean-scope>session</managed-bean-scope>
+
+    <managed-property>
+    	<property-name>serviceLocator</property-name>
+    	<value>#{serviceLocatorBean}</value>
+    </managed-property>
+    </managed-bean>
+    
+    <managed-bean>
+    <description>
+      Managed bean that is used as an application scope cache
+    </description>
+    <managed-bean-name>cashTransferBean</managed-bean-name>
+    <managed-bean-class>trackit.backingbeans.CashTransferBean</managed-bean-class>
+    <managed-bean-scope>request</managed-bean-scope>
+
+    <managed-property>
+    	<property-name>serviceLocator</property-name>
+    	<value>#{serviceLocatorBean}</value>
+    </managed-property>
+    </managed-bean>
+
+
+    <managed-bean>
+    <description>
+      Managed bean that is used as an application scope cache
+    </description>
+    <managed-bean-name>mainPageBean</managed-bean-name>
+    <managed-bean-class>trackit.backingbeans.MainPageBean</managed-bean-class>
+    <managed-bean-scope>session</managed-bean-scope>
+
+    <managed-property>
+    	<property-name>serviceLocator</property-name>
+    	<value>#{serviceLocatorBean}</value>
+    </managed-property>
+    </managed-bean>
+
+    <managed-bean>
+    <description>
+      Managed bean that is used as an application scope cache
+    </description>
+    <managed-bean-name>expenseItemBean</managed-bean-name>
+    <managed-bean-class>trackit.backingbeans.ExpenseItemBean</managed-bean-class>
+    <managed-bean-scope>request</managed-bean-scope>
+
+    <managed-property>
+    	<property-name>serviceLocator</property-name>
+    	<value>#{serviceLocatorBean}</value>
+    </managed-property>
+    </managed-bean>
+    
+    <managed-bean>
+    <description>
+      Managed bean that is used as an application scope cache
+    </description>
+    <managed-bean-name>applicationBean</managed-bean-name>
+    <managed-bean-class>trackit.backingbeans.ApplicationBean</managed-bean-class>
+    <managed-bean-scope>application</managed-bean-scope>
+    <!--managed-property>
+    	<property-name>productsPerPage</property-name>
+    	<value>6</value>
+    </managed-property>
+    <managed-property>
+    	<property-name>productImageDirUri</property-name>
+    	<value>TOMCAT_HOME\webapps\catalog\images\products</value>
+    </managed-property>
+    <managed-property>
+    	<property-name>imageUploadResultPage</property-name>
+    	<value>uploadImageResult.jsf</value>
+    </managed-property> 
+    <managed-property>
+    	<property-name>serviceLocator</property-name>
+    	<value>#{serviceLocatorBean}</value>
+    </managed-property-->    
+  </managed-bean>
+  
+  <managed-bean>
+    <description>
+      Managed bean that is used as a session scope cache
+    </description>
+    <managed-bean-name>sessionBean</managed-bean-name>
+    <managed-bean-class>trackit.backingbeans.SessionBean</managed-bean-class>
+    <managed-bean-scope>session</managed-bean-scope>
+    
+    <managed-property>
+    	<property-name>serviceLocator</property-name>
+    	<value>#{serviceLocatorBean}</value>
+    </managed-property>
+  </managed-bean>
+  
+  <managed-bean>
+    <description>
+      Service locator of the business services
+    </description>
+    <managed-bean-name>serviceLocatorBean</managed-bean-name>
+    <managed-bean-class>trackit.backingbeans.ServiceLocatorBean</managed-bean-class>
+    <managed-bean-scope>application</managed-bean-scope>
+  </managed-bean>
+  
+  <managed-bean>
+    <description>
+      Backing bean that contains user informaiton.
+    </description>
+    <managed-bean-name>userBean</managed-bean-name>
+    <managed-bean-class>trackit.backingbeans.UserBean</managed-bean-class>
+    <managed-bean-scope>request</managed-bean-scope>
+    <managed-property>
+    	<property-name>serviceLocator</property-name>
+    	<value>#{serviceLocatorBean}</value>
+    </managed-property> 
+  </managed-bean>
+
+  <managed-bean>
+    <description>
+      Managed bean that is used as an application scope cache
+    </description>
+    <managed-bean-name>accountBean</managed-bean-name>
+    <managed-bean-class>trackit.backingbeans.AccountBean</managed-bean-class>
+    <managed-bean-scope>request</managed-bean-scope>
+    <managed-property>
+    	<property-name>user</property-name>
+    	<value>#{userBean}</value>
+    </managed-property>
+
+    <managed-property>
+    	<property-name>serviceLocator</property-name>
+    	<value>#{serviceLocatorBean}</value>
+    </managed-property>
+    </managed-bean>
+
+
+
+    <managed-bean>
+    <description>
+      Managed bean that is used as an application scope cache
+    </description>
+    <managed-bean-name>bankAccountBean</managed-bean-name>
+    <managed-bean-class>trackit.backingbeans.BankAccountBean</managed-bean-class>
+    <managed-bean-scope>request</managed-bean-scope>
+    <managed-property>
+    	<property-name>serviceLocator</property-name>
+    	<value>#{serviceLocatorBean}</value>
+    </managed-property>
+    </managed-bean>
+
+    <managed-bean>
+    <description>
+      Managed bean that is used as an application scope cache
+    </description>
+    <managed-bean-name>bankAccountListBean</managed-bean-name>
+    <managed-bean-class>trackit.backingbeans.BankAccountListBean</managed-bean-class>
+    <managed-bean-scope>request</managed-bean-scope>
+    <managed-property>
+    	<property-name>serviceLocator</property-name>
+    	<value>#{serviceLocatorBean}</value>
+    </managed-property>
+    </managed-bean>
+
+    <managed-bean>
+    <description>
+      Managed bean that is used as an application scope cache
+    </description>
+    <managed-bean-name>creditCardBean</managed-bean-name>
+    <managed-bean-class>trackit.backingbeans.CreditCardBean</managed-bean-class>
+    <managed-bean-scope>request</managed-bean-scope>
+
+    <managed-property>
+    	<property-name>serviceLocator</property-name>
+    	<value>#{serviceLocatorBean}</value>
+    </managed-property>
+    </managed-bean>
+
+        
+    <managed-bean>
+    <description>
+      Managed bean that is used as an application scope cache
+    </description>
+    <managed-bean-name>creditCardListBean</managed-bean-name>
+    <managed-bean-class>trackit.backingbeans.CreditCardListBean</managed-bean-class>
+    <managed-bean-scope>request</managed-bean-scope>
+
+    <managed-property>
+    	<property-name>serviceLocator</property-name>
+    	<value>#{serviceLocatorBean}</value>
+    </managed-property>
+    </managed-bean>
+
+
+    <managed-bean>
+    <description>
+      Managed bean that is used as an application scope cache
+    </description>
+    <managed-bean-name>accountUserBean</managed-bean-name>
+    <managed-bean-class>trackit.backingbeans.AccountUserBean</managed-bean-class>
+    <managed-bean-scope>request</managed-bean-scope>
+
+    <managed-property>
+    	<property-name>serviceLocator</property-name>
+    	<value>#{serviceLocatorBean}</value>
+    </managed-property>
+    </managed-bean>
+
+    <managed-bean>
+    <description>
+      Managed bean that is used as an application scope cache
+    </description>
+    <managed-bean-name>accountUserListBean</managed-bean-name>
+    <managed-bean-class>trackit.backingbeans.AccountUserListBean</managed-bean-class>
+    <managed-bean-scope>request</managed-bean-scope>
+
+    <managed-property>
+    	<property-name>serviceLocator</property-name>
+    	<value>#{serviceLocatorBean}</value>
+    </managed-property>
+    </managed-bean>
+
+    <managed-bean>
+    <description>
+      Managed bean that is used as an application scope cache
+    </description>
+    <managed-bean-name>loanBean</managed-bean-name>
+    <managed-bean-class>trackit.backingbeans.LoanBean</managed-bean-class>
+    <managed-bean-scope>session</managed-bean-scope>
+
+    <managed-property>
+    	<property-name>serviceLocator</property-name>
+    	<value>#{serviceLocatorBean}</value>
+    </managed-property>
+    </managed-bean>
+
+    <managed-bean>
+    <description>
+      Managed bean that is used as an application scope cache
+    </description>
+    <managed-bean-name>borrowerBean</managed-bean-name>
+    <managed-bean-class>trackit.backingbeans.BorrowerBean</managed-bean-class>
+    <managed-bean-scope>session</managed-bean-scope>
+
+    <managed-property>
+    	<property-name>serviceLocator</property-name>
+    	<value>#{serviceLocatorBean}</value>
+    </managed-property>
+    </managed-bean>
+
+    <managed-bean>
+    <description>
+      Managed bean that is used as an application scope cache
+    </description>
+    <managed-bean-name>borrowerListBean</managed-bean-name>
+    <managed-bean-class>trackit.backingbeans.BorrowerListBean</managed-bean-class>
+    <managed-bean-scope>session</managed-bean-scope>
+
+    <managed-property>
+    	<property-name>serviceLocator</property-name>
+    	<value>#{serviceLocatorBean}</value>
+    </managed-property>
+    </managed-bean>
+
+    <managed-bean>
+    <description>
+      Managed bean that is used as an application scope cache
+    </description>
+    <managed-bean-name>loanPaymentBean</managed-bean-name>
+    <managed-bean-class>trackit.backingbeans.LoanPaymentBean</managed-bean-class>
+    <managed-bean-scope>session</managed-bean-scope>
+
+    <managed-property>
+    	<property-name>serviceLocator</property-name>
+    	<value>#{serviceLocatorBean}</value>
+    </managed-property>
+    </managed-bean>
+
+
+
+    <managed-bean>
+    <description>
+      Managed bean that is used as an application scope cache
+    </description>
+    <managed-bean-name>expenseGroupBean</managed-bean-name>
+    <managed-bean-class>trackit.backingbeans.ExpenseGroupBean</managed-bean-class>
+    <managed-bean-scope>request</managed-bean-scope>
+
+    <managed-property>
+    	<property-name>serviceLocator</property-name>
+    	<value>#{serviceLocatorBean}</value>
+    </managed-property>
+    </managed-bean>
+
+    <managed-bean>
+    <description>
+      Managed bean that is used as an application scope cache
+    </description>
+    <managed-bean-name>expenseGroupListBean</managed-bean-name>
+    <managed-bean-class>trackit.backingbeans.ExpenseGroupListBean</managed-bean-class>
+    <managed-bean-scope>session</managed-bean-scope>
+
+    <managed-property>
+    	<property-name>serviceLocator</property-name>
+    	<value>#{serviceLocatorBean}</value>
+    </managed-property>
+    </managed-bean>
+
+
+
+
+
+    <managed-bean>
+    <description>
+      Managed bean that is used as an application scope cache
+    </description>
+    <managed-bean-name>expenseTypeBean</managed-bean-name>
+    <managed-bean-class>trackit.backingbeans.ExpenseTypeBean</managed-bean-class>
+    <managed-bean-scope>request</managed-bean-scope>
+
+    <managed-property>
+    	<property-name>serviceLocator</property-name>
+    	<value>#{serviceLocatorBean}</value>
+    </managed-property>
+    </managed-bean>
+
+    <managed-bean>
+    <description>
+      Managed bean that is used as an application scope cache
+    </description>
+    <managed-bean-name>expenseTypeListBean</managed-bean-name>
+    <managed-bean-class>trackit.backingbeans.ExpenseTypeListBean</managed-bean-class>
+    <managed-bean-scope>request</managed-bean-scope>
+
+    <managed-property>
+    	<property-name>serviceLocator</property-name>
+    	<value>#{serviceLocatorBean}</value>
+    </managed-property>
+    </managed-bean>
+
+
+
+    <managed-bean>
+    <description>
+      Managed bean that is used as an application scope cache
+    </description>
+    <managed-bean-name>payeeBean</managed-bean-name>
+    <managed-bean-class>trackit.backingbeans.PayeeBean</managed-bean-class>
+    <managed-bean-scope>request</managed-bean-scope>
+
+    <managed-property>
+    	<property-name>serviceLocator</property-name>
+    	<value>#{serviceLocatorBean}</value>
+    </managed-property>
+    </managed-bean>
+
+    <managed-bean>
+    <description>
+      Managed bean that is used as an application scope cache
+    </description>
+    <managed-bean-name>payeeListBean</managed-bean-name>
+    <managed-bean-class>trackit.backingbeans.PayeeListBean</managed-bean-class>
+    <managed-bean-scope>session</managed-bean-scope>
+
+    <managed-property>
+    	<property-name>serviceLocator</property-name>
+    	<value>#{serviceLocatorBean}</value>
+    </managed-property>
+    </managed-bean>
+
+
+
+    <managed-bean>
+    <description>
+      Managed bean that is used as an application scope cache
+    </description>
+    <managed-bean-name>statementBean</managed-bean-name>
+    <managed-bean-class>trackit.backingbeans.StatementBean</managed-bean-class>
+    <managed-bean-scope>session</managed-bean-scope>
+
+    <managed-property>
+    	<property-name>serviceLocator</property-name>
+    	<value>#{serviceLocatorBean}</value>
+    </managed-property>
+    </managed-bean>
+
+    <managed-bean>
+    <description>
+      Managed bean that is used as an application scope cache
+    </description>
+    <managed-bean-name>statementItemBean</managed-bean-name>
+    <managed-bean-class>trackit.backingbeans.StatementItemBean</managed-bean-class>
+    <managed-bean-scope>request</managed-bean-scope>
+
+    <managed-property>
+    	<property-name>serviceLocator</property-name>
+    	<value>#{serviceLocatorBean}</value>
+    </managed-property>
+    </managed-bean>
+
+
+
+
+    <managed-bean>
+    <description>
+      Managed bean that is used as an application scope cache
+    </description>
+    <managed-bean-name>creditCardStatementBean</managed-bean-name>
+    <managed-bean-class>trackit.backingbeans.CreditCardStatementBean</managed-bean-class>
+    <managed-bean-scope>session</managed-bean-scope>
+
+    <managed-property>
+    	<property-name>serviceLocator</property-name>
+    	<value>#{serviceLocatorBean}</value>
+    </managed-property>
+    </managed-bean>
+
+    <managed-bean>
+    <description>
+      Managed bean that is used as an application scope cache
+    </description>
+    <managed-bean-name>creditCardStatementItemBean</managed-bean-name>
+    <managed-bean-class>trackit.backingbeans.CreditCardStatementItemBean</managed-bean-class>
+    <managed-bean-scope>request</managed-bean-scope>
+
+    <managed-property>
+    	<property-name>serviceLocator</property-name>
+    	<value>#{serviceLocatorBean}</value>
+    </managed-property>
+    </managed-bean>
+
+
+
+
+    <managed-bean>
+    <description>
+      Managed bean that is used as an application scope cache
+    </description>
+    <managed-bean-name>incomeSourceBean</managed-bean-name>
+    <managed-bean-class>trackit.backingbeans.IncomeSourceBean</managed-bean-class>
+    <managed-bean-scope>request</managed-bean-scope>
+
+    <managed-property>
+    	<property-name>serviceLocator</property-name>
+    	<value>#{serviceLocatorBean}</value>
+    </managed-property>
+    </managed-bean>
+
+    <managed-bean>
+    <description>
+      Managed bean that is used as an application scope cache
+    </description>
+    <managed-bean-name>incomeSourceListBean</managed-bean-name>
+    <managed-bean-class>trackit.backingbeans.IncomeSourceListBean</managed-bean-class>
+    <managed-bean-scope>session</managed-bean-scope>
+
+    <managed-property>
+    	<property-name>serviceLocator</property-name>
+    	<value>#{serviceLocatorBean}</value>
+    </managed-property>
+    </managed-bean>
+
+
+    <managed-bean>
+    <description>
+      Managed bean that is used as an application scope cache
+    </description>
+    <managed-bean-name>incomeBean</managed-bean-name>
+    <managed-bean-class>trackit.backingbeans.IncomeBean</managed-bean-class>
+    <managed-bean-scope>session</managed-bean-scope>
+
+    <managed-property>
+    	<property-name>serviceLocator</property-name>
+    	<value>#{serviceLocatorBean}</value>
+    </managed-property>
+    </managed-bean>
+
+    <managed-bean>
+    <description>
+      Managed bean that is used as an application scope cache
+    </description>
+    <managed-bean-name>depositBean</managed-bean-name>
+    <managed-bean-class>trackit.backingbeans.DepositBean</managed-bean-class>
+    <managed-bean-scope>session</managed-bean-scope>
+
+    <managed-property>
+    	<property-name>serviceLocator</property-name>
+    	<value>#{serviceLocatorBean}</value>
+    </managed-property>
+    </managed-bean>
+
+
+
+    <managed-bean>
+    <description>
+      Managed bean that is used as an application scope cache
+    </description>
+    <managed-bean-name>moBean</managed-bean-name>
+    <managed-bean-class>trackit.backingbeans.MoneyOrderBean</managed-bean-class>
+    <managed-bean-scope>session</managed-bean-scope>
+
+    <managed-property>
+    	<property-name>serviceLocator</property-name>
+    	<value>#{serviceLocatorBean}</value>
+    </managed-property>
+    </managed-bean>
+
+    <managed-bean>
+    <description>
+      Managed bean that is used as an application scope cache
+    </description>
+    <managed-bean-name>creditCardPaymentBean</managed-bean-name>
+    <managed-bean-class>trackit.backingbeans.CreditCardPaymentBean</managed-bean-class>
+    <managed-bean-scope>session</managed-bean-scope>
+
+    <managed-property>
+    	<property-name>serviceLocator</property-name>
+    	<value>#{serviceLocatorBean}</value>
+    </managed-property>
+    </managed-bean>
+
+    <managed-bean>
+    <description>
+      Managed bean that is used as an application scope cache
+    </description>
+    <managed-bean-name>loanSummaryBean</managed-bean-name>
+    <managed-bean-class>trackit.backingbeans.LoanSummaryBean</managed-bean-class>
+    <managed-bean-scope>session</managed-bean-scope>
+
+    <managed-property>
+    	<property-name>serviceLocator</property-name>
+    	<value>#{serviceLocatorBean}</value>
+    </managed-property>
+    </managed-bean>
+    
+    <managed-bean>
+    <description>
+      Managed bean that is used as an application scope cache
+    </description>
+    <managed-bean-name>loanReportListBean</managed-bean-name>
+    <managed-bean-class>trackit.backingbeans.LoanReportListBean</managed-bean-class>
+    <managed-bean-scope>request</managed-bean-scope>
+
+    <managed-property>
+    	<property-name>serviceLocator</property-name>
+    	<value>#{serviceLocatorBean}</value>
+    </managed-property>
+    </managed-bean>
+
+    <managed-bean>
+    <description>
+      Managed bean that is used as an application scope cache
+    </description>
+    <managed-bean-name>loanHistoryBean</managed-bean-name>
+    <managed-bean-class>trackit.backingbeans.LoanHistoryBean</managed-bean-class>
+    <managed-bean-scope>session</managed-bean-scope>
+
+    <managed-property>
+    	<property-name>serviceLocator</property-name>
+    	<value>#{serviceLocatorBean}</value>
+    </managed-property>
+    </managed-bean>
+
+    <managed-bean>
+    <description>
+      Managed bean that is used as an application scope cache
+    </description>
+    <managed-bean-name>currencyOnHandHistoryBean</managed-bean-name>
+    <managed-bean-class>trackit.backingbeans.CurrencyOnHandHistoryBean</managed-bean-class>
+    <managed-bean-scope>session</managed-bean-scope>
+
+    <managed-property>
+    	<property-name>serviceLocator</property-name>
+    	<value>#{serviceLocatorBean}</value>
+    </managed-property>
+    </managed-bean>
+    
+    
+    <managed-bean>
+    <description>
+      Managed bean that is used as an application scope cache
+    </description>
+    <managed-bean-name>currencyOnHandReportListBean</managed-bean-name>
+    <managed-bean-class>trackit.backingbeans.CurrencyOnHandReportListBean</managed-bean-class>
+    <managed-bean-scope>request</managed-bean-scope>
+
+    <managed-property>
+    	<property-name>serviceLocator</property-name>
+    	<value>#{serviceLocatorBean}</value>
+    </managed-property>
+    </managed-bean>
+
+    <managed-bean>
+    <description>
+      Managed bean that is used as an application scope cache
+    </description>
+    <managed-bean-name>expenseGroupReportBean</managed-bean-name>
+    <managed-bean-class>trackit.backingbeans.ExpenseGroupReportBean</managed-bean-class>
+    <managed-bean-scope>request</managed-bean-scope>
+
+    <managed-property>
+    	<property-name>serviceLocator</property-name>
+    	<value>#{serviceLocatorBean}</value>
+    </managed-property>
+    </managed-bean>
+
+    <managed-bean>
+    <description>
+      Managed bean that is used as an application scope cache
+    </description>
+    <managed-bean-name>capitalReportBean</managed-bean-name>
+    <managed-bean-class>trackit.backingbeans.CapitalReportBean</managed-bean-class>
+    <managed-bean-scope>request</managed-bean-scope>
+
+    <managed-property>
+    	<property-name>serviceLocator</property-name>
+    	<value>#{serviceLocatorBean}</value>
+    </managed-property>
+    </managed-bean>
+
+    <managed-bean>
+    <description>
+      Managed bean that is used as an application scope cache
+    </description>
+    <managed-bean-name>expenseCategoryTreeBean</managed-bean-name>
+    <managed-bean-class>trackit.backingbeans.ExpenseCategoryTreeBean</managed-bean-class>
+    <managed-bean-scope>session</managed-bean-scope>
+
+    <managed-property>
+    	<property-name>serviceLocator</property-name>
+    	<value>#{serviceLocatorBean}</value>
+    </managed-property>
+    </managed-bean>
+    
+    <managed-bean>
+    <description>
+      Managed bean that is used as an application scope cache
+    </description>
+    <managed-bean-name>creditCardTransactionBean</managed-bean-name>
+    <managed-bean-class>trackit.backingbeans.CreditCardTransactionBean</managed-bean-class>
+    <managed-bean-scope>session</managed-bean-scope>
+
+    <managed-property>
+    	<property-name>serviceLocator</property-name>
+    	<value>#{serviceLocatorBean}</value>
+    </managed-property>
+    </managed-bean>
+
+    <managed-bean>
+    <description>
+      Managed bean that is used as an application scope cache
+    </description>
+    <managed-bean-name>bankAccountTransactionBean</managed-bean-name>
+    <managed-bean-class>trackit.backingbeans.BankAccountTransactionBean</managed-bean-class>
+    <managed-bean-scope>session</managed-bean-scope>
+
+    <managed-property>
+    	<property-name>serviceLocator</property-name>
+    	<value>#{serviceLocatorBean}</value>
+    </managed-property>
+    </managed-bean>
+
+    <managed-bean>
+    <description>
+      Managed bean that is used as an application scope cache
+    </description>
+    <managed-bean-name>bankAccountWithdrawlBean</managed-bean-name>
+    <managed-bean-class>trackit.backingbeans.BankAccountWithdrawlBean</managed-bean-class>
+    <managed-bean-scope>session</managed-bean-scope>
+
+    <managed-property>
+    	<property-name>serviceLocator</property-name>
+    	<value>#{serviceLocatorBean}</value>
+    </managed-property>
+    </managed-bean>
+    
+    
+    
+    <managed-bean>
+    <description>
+      Managed bean that is used as an application scope cache
+    </description>
+    <managed-bean-name>fileUploadBean</managed-bean-name>
+    <managed-bean-class>trackit.backingbeans.FileUploadBean</managed-bean-class>
+    <managed-bean-scope>request</managed-bean-scope>
+
+    <managed-property>
+    	<property-name>serviceLocator</property-name>
+    	<value>#{serviceLocatorBean}</value>
+    </managed-property>
+    </managed-bean>
+    
+    
+    <managed-bean>
+    <description>
+      Managed bean that is used as an application scope cache
+    </description>
+    <managed-bean-name>statementColumnSelectionBean</managed-bean-name>
+    <managed-bean-class>trackit.backingbeans.StatementColumnSelectionBean</managed-bean-class>
+    <managed-bean-scope>request</managed-bean-scope>
+
+    <managed-property>
+    	<property-name>serviceLocator</property-name>
+    	<value>#{serviceLocatorBean}</value>
+    </managed-property>
+    </managed-bean>
+    
+    
+    <managed-bean>
+    <description>
+      Managed bean that is used as an application scope cache
+    </description>
+    <managed-bean-name>statementComparisonBean</managed-bean-name>
+    <managed-bean-class>trackit.backingbeans.StatementComparisonBean</managed-bean-class>
+    <managed-bean-scope>request</managed-bean-scope>
+
+    <managed-property>
+    	<property-name>serviceLocator</property-name>
+    	<value>#{serviceLocatorBean}</value>
+    </managed-property>
+    </managed-bean>
+    
+
+  <!--managed-bean>
+    <description>
+      Backing bean that contains product information.
+    </description>
+    <managed-bean-name>productBean</managed-bean-name>
+    <managed-bean-class>catalog.view.bean.ProductBean</managed-bean-class>
+    <managed-bean-scope>request</managed-bean-scope>    
+    <managed-property>
+    	<property-name>id</property-name>
+    	<value>#{param.productId}</value>
+    </managed-property> 
+    <managed-property>
+    	<property-name>serviceLocator</property-name>
+    	<value>#{serviceLocatorBean}</value>
+    </managed-property> 
+  </managed-bean-->
+  
+  <!--managed-bean>
+    <description>
+      Backing bean that contains a list of product.
+    </description>
+    <managed-bean-name>productListBean</managed-bean-name>
+    <managed-bean-class>catalog.view.bean.ProductListBean</managed-bean-class>
+    <managed-bean-scope>session</managed-bean-scope>
+    <managed-property>
+    	<property-name>serviceLocator</property-name>
+    	<value>#{serviceLocatorBean}</value>
+    </managed-property> 
+  </managed-bean-->
+  
+  <!--managed-bean>
+    <description>
+      Backing bean that contains message information.
+    </description>
+    <managed-bean-name>messageBean</managed-bean-name>
+    <managed-bean-class>catalog.view.bean.MessageBean</managed-bean-class>
+    <managed-bean-scope>request</managed-bean-scope>
+    <managed-property>
+    	<property-name>serviceLocator</property-name>
+    	<value>#{serviceLocatorBean}</value>
+    </managed-property>     
+  </managed-bean-->
+  
+  <navigation-rule>
+    <from-view-id>/NewUser.jsp</from-view-id>
+    <navigation-case>
+        <description>
+        </description>
+      <from-outcome>user_created</from-outcome>
+      <to-view-id>/Login.jsp</to-view-id>
+    </navigation-case>    
+  </navigation-rule>
+    
+  <navigation-rule>
+    <from-view-id>/Login.jsp</from-view-id>
+    <navigation-case>
+        <description>
+        </description>
+      <from-outcome>success</from-outcome>
+      <to-view-id>/HomePage.jsp</to-view-id>
+    </navigation-case>    
+  </navigation-rule>
+
+  <navigation-rule>
+    <from-view-id>/welcomeJSF.jsp</from-view-id>
+    <navigation-case>
+        <description>
+        </description>
+      <from-outcome>success</from-outcome>
+      <to-view-id>/HomePage.jsp</to-view-id>
+    </navigation-case>
+  </navigation-rule>
+
+  <navigation-rule>
+    <from-view-id>/welcomeJSF.jsp</from-view-id>
+    <navigation-case>
+        <description>
+        </description>
+      <from-outcome>ADMIN_SUCCESS</from-outcome>
+      <to-view-id>/AdminHome.jsp</to-view-id>
+    </navigation-case>
+  </navigation-rule>
+
+  <navigation-rule>
+    <from-view-id>*</from-view-id>
+    <navigation-case>
+        <description>
+        </description>
+      <from-outcome>ADMIN_HOME</from-outcome>
+      <to-view-id>/AdminHome.jsp</to-view-id>
+    </navigation-case>
+  </navigation-rule>
+
+  <navigation-rule>
+    <from-view-id>/main.jsp</from-view-id>
+    <navigation-case>
+        <description>
+        </description>
+      <from-outcome>success</from-outcome>
+      <to-view-id>/HomePage.jsp</to-view-id>
+    </navigation-case>
+  </navigation-rule>
+  
+  <navigation-rule>
+    <from-view-id>*</from-view-id>
+    <navigation-case>
+        <description>
+        </description>
+      <from-outcome>new_expense</from-outcome>
+      <to-view-id>/NewExpense.jsp</to-view-id>
+    </navigation-case>    
+  </navigation-rule>
+
+  <navigation-rule>
+    <from-view-id>/NewAccount.jsp</from-view-id>
+    <navigation-case>
+        <description>
+        </description>
+      <from-outcome>account_created</from-outcome>
+      <to-view-id>/HomePage.jsp</to-view-id>
+    </navigation-case>
+  </navigation-rule>
+
+  <navigation-rule>
+    <from-view-id>/NewBankAccount.jsp</from-view-id>
+    <navigation-case>
+        <description>
+        </description>
+      <from-outcome>bank_account_created</from-outcome>
+      <to-view-id>/BankAccounts.jsp</to-view-id>
+    </navigation-case>
+  </navigation-rule>
+
+  <navigation-rule>
+    <from-view-id>/NewBankAccount.jsp</from-view-id>
+    <navigation-case>
+        <description>
+        </description>
+      <from-outcome>CREATE_BANK_ACCOUNT_CANCELLED</from-outcome>
+      <to-view-id>/BankAccounts.jsp</to-view-id>
+    </navigation-case>
+  </navigation-rule>
+
+  <navigation-rule>
+    <from-view-id>*</from-view-id>
+    <navigation-case>
+        <description>
+        </description>
+      <from-outcome>BANK_ACCOUNTS_SUMMARY</from-outcome>
+      <to-view-id>/BankAccounts.jsp</to-view-id>
+    </navigation-case>
+  </navigation-rule>
+
+  <navigation-rule>
+    <from-view-id>*</from-view-id>
+    <navigation-case>
+        <description>
+        </description>
+      <from-outcome>NEW_DEPOSIT</from-outcome>
+      <to-view-id>/NewDeposit.jsp</to-view-id>
+    </navigation-case>
+  </navigation-rule>
+
+  <navigation-rule>
+    <from-view-id>/NewCreditCard.jsp</from-view-id>
+    <navigation-case>
+        <description>
+        </description>
+      <from-outcome>credit_card_created</from-outcome>
+      <to-view-id>/CreditCards.jsp</to-view-id>
+    </navigation-case>
+  </navigation-rule>
+
+  <navigation-rule>
+    <from-view-id>/NewCreditCard.jsp</from-view-id>
+    <navigation-case>
+        <description>
+        </description>
+      <from-outcome>CREATE_CREDIT_CARD_CANCELLED</from-outcome>
+      <to-view-id>/CreditCards.jsp</to-view-id>
+    </navigation-case>
+  </navigation-rule>
+
+  <navigation-rule>
+    <from-view-id>/NewCreditCardTransaction.jsp</from-view-id>
+    <navigation-case>
+        <description>
+        </description>
+      <from-outcome>CREATE_CREDIT_CARD_TRANSACTION_CANCELLED</from-outcome>
+      <to-view-id>/CreditCardStatement.jsp</to-view-id>
+    </navigation-case>
+  </navigation-rule>
+
+  <navigation-rule>
+    <from-view-id>/NewCreditCardTransaction.jsp</from-view-id>
+    <navigation-case>
+        <description>
+        </description>
+      <from-outcome>CREDIT_CARD_TRANSACTION_CREATED</from-outcome>
+      <to-view-id>/CreditCardStatement.jsp</to-view-id>
+    </navigation-case>
+  </navigation-rule>
+
+  <navigation-rule>
+    <from-view-id>*</from-view-id>
+    <navigation-case>
+        <description>
+        </description>
+      <from-outcome>CREDIT_CARD_TRANSACTION</from-outcome>
+      <to-view-id>/NewCreditCardTransaction.jsp</to-view-id>
+    </navigation-case>
+  </navigation-rule>
+  
+  <navigation-rule>
+    <from-view-id>*</from-view-id>
+    <navigation-case>
+        <description>
+        </description>
+      <from-outcome>UPLOAD_STATEMENT</from-outcome>
+      <to-view-id>/UploadStatement.jsp</to-view-id>
+    </navigation-case>
+  </navigation-rule>
+
+  <navigation-rule>
+    <from-view-id>*</from-view-id>
+    <navigation-case>
+        <description>
+        </description>
+      <from-outcome>CREATE_CREDIT_CARD_TRANSACTION_REQUESTED</from-outcome>
+      <to-view-id>/NewCreditCardTransaction.jsp</to-view-id>
+    </navigation-case>
+  </navigation-rule>
+
+  <navigation-rule>
+    <from-view-id>*</from-view-id>
+    <navigation-case>
+        <description>
+        </description>
+      <from-outcome>create_bank_account_requested</from-outcome>
+      <to-view-id>/NewBankAccount.jsp</to-view-id>
+    </navigation-case>
+  </navigation-rule>
+
+  <navigation-rule>
+    <from-view-id>*</from-view-id>
+    <navigation-case>
+        <description>
+        </description>
+      <from-outcome>CREATE_BANK_TRANSACTION_REQUESTED</from-outcome>
+      <to-view-id>/NewBankAccountTransaction.jsp</to-view-id>
+    </navigation-case>
+  </navigation-rule>
+
+  <navigation-rule>
+    <from-view-id>*</from-view-id>
+    <navigation-case>
+        <description>
+        </description>
+      <from-outcome>BANK_TRANSACTION_CREATED</from-outcome>
+      <to-view-id>/BankStatement.jsp</to-view-id>
+    </navigation-case>
+  </navigation-rule>
+
+  <navigation-rule>
+    <from-view-id>*</from-view-id>
+    <navigation-case>
+        <description>
+        </description>
+      <from-outcome>CREATE_BANK_TRANSACTION_CANCELLED</from-outcome>
+      <to-view-id>/BankStatement.jsp</to-view-id>
+    </navigation-case>
+  </navigation-rule>
+
+
+
+
+  <navigation-rule>
+    <from-view-id>*</from-view-id>
+    <navigation-case>
+        <description>
+        </description>
+      <from-outcome>CREATE_BANK_WITHDRAWL_REQUESTED</from-outcome>
+      <to-view-id>/NewBankAccountWithdrawl.jsp</to-view-id>
+    </navigation-case>
+  </navigation-rule>
+
+  <navigation-rule>
+    <from-view-id>*</from-view-id>
+    <navigation-case>
+        <description>
+        </description>
+      <from-outcome>BANK_WITHDRAWL_CREATED</from-outcome>
+      <to-view-id>/BankStatement.jsp</to-view-id>
+    </navigation-case>
+  </navigation-rule>
+
+  <navigation-rule>
+    <from-view-id>*</from-view-id>
+    <navigation-case>
+        <description>
+        </description>
+      <from-outcome>CREATE_BANK_WITHDRAWL_CANCELLED</from-outcome>
+      <to-view-id>/BankStatement.jsp</to-view-id>
+    </navigation-case>
+  </navigation-rule>
+
+  <navigation-rule>
+    <from-view-id>/CreditCards.jsp</from-view-id>
+    <navigation-case>
+        <description>
+        </description>
+      <from-outcome>create_credit_card_requested</from-outcome>
+      <to-view-id>/NewCreditCard.jsp</to-view-id>
+    </navigation-case>
+  </navigation-rule>
+
+  <navigation-rule>
+    <from-view-id>*</from-view-id>
+    <navigation-case>
+        <description>
+        </description>
+      <from-outcome>create_expense_group_requested</from-outcome>
+      <to-view-id>/NewExpenseGroup.jsp</to-view-id>
+    </navigation-case>
+  </navigation-rule>
+  
+  <navigation-rule>
+    <from-view-id>*</from-view-id>
+    <navigation-case>
+        <description>
+        </description>
+      <from-outcome>CREATE_EXPENSE_GROUP_CANCELLED</from-outcome>
+      <to-view-id>/ExpenseGroups.jsp</to-view-id>
+    </navigation-case>
+  </navigation-rule>
+
+
+
+  <navigation-rule>
+    <from-view-id>*</from-view-id>
+    <navigation-case>
+        <description>
+        </description>
+      <from-outcome>CREATE_MONEY_ORDER_REQUESTED</from-outcome>
+      <to-view-id>/NewMoneyOrder.jsp</to-view-id>
+    </navigation-case>
+  </navigation-rule>
+
+  <navigation-rule>
+    <from-view-id>*</from-view-id>
+    <navigation-case>
+        <description>
+        </description>
+      <from-outcome>create_expense_type_requested</from-outcome>
+      <to-view-id>/NewExpenseType.jsp</to-view-id>
+    </navigation-case>
+  </navigation-rule>
+
+  <navigation-rule>
+    <from-view-id>*</from-view-id>
+    <navigation-case>
+        <description>
+        </description>
+      <from-outcome>create_payee_requested</from-outcome>
+      <to-view-id>/NewPayee.jsp</to-view-id>
+    </navigation-case>
+  </navigation-rule>
+
+  <navigation-rule>
+    <from-view-id>*</from-view-id>
+    <navigation-case>
+        <description>
+        </description>
+      <from-outcome>create_credit_card_requested</from-outcome>
+      <to-view-id>/NewCreditCard.jsp</to-view-id>
+    </navigation-case>
+  </navigation-rule>
+
+  <navigation-rule>
+    <from-view-id>/NewExpenseGroup.jsp</from-view-id>
+    <navigation-case>   
+        <description>
+        </description>
+      <from-outcome>expense_group_created</from-outcome>
+      <to-view-id>/ExpenseGroups.jsp</to-view-id>
+    </navigation-case>
+  </navigation-rule>
+
+  <navigation-rule>
+    <from-view-id>*</from-view-id>
+    <navigation-case>
+        <description>
+        </description>
+      <from-outcome>EXPENSE_GROUPS</from-outcome>
+      <to-view-id>/ExpenseGroups.jsp</to-view-id>
+    </navigation-case>
+  </navigation-rule>
+
+  <navigation-rule>
+    <from-view-id>/ExpenseTypes.jsp</from-view-id>
+    <navigation-case>
+        <description>
+        </description>
+      <from-outcome>create_expense_type_requested</from-outcome>
+      <to-view-id>/NewExpenseType.jsp</to-view-id>
+    </navigation-case>
+  </navigation-rule>
+
+  <navigation-rule>
+    <from-view-id>/NewExpenseType.jsp</from-view-id>
+    <navigation-case>
+        <description>
+        </description>
+      <from-outcome>expense_type_created</from-outcome>
+      <to-view-id>/Expenses.jsp</to-view-id>
+    </navigation-case>
+  </navigation-rule>
+
+  <navigation-rule>
+    <from-view-id>*</from-view-id>
+    <navigation-case>
+        <description>
+        </description>
+      <from-outcome>EXPENSE_TYPES</from-outcome>
+      <to-view-id>/ExpenseTypes.jsp</to-view-id>
+    </navigation-case>
+  </navigation-rule>
+
+  <navigation-rule>
+    <from-view-id>/Payees.jsp</from-view-id>
+    <navigation-case>
+        <description>
+        </description>
+      <from-outcome>create_payee_requested</from-outcome>
+      <to-view-id>/NewPayee.jsp</to-view-id>
+    </navigation-case>
+  </navigation-rule>
+
+  <navigation-rule>
+    <from-view-id>/NewPayee.jsp</from-view-id>
+    <navigation-case>
+        <description>
+        </description>
+      <from-outcome>payee_created</from-outcome>
+      <to-view-id>/Payees.jsp</to-view-id>
+    </navigation-case>
+  </navigation-rule>
+
+  <navigation-rule>
+    <from-view-id>/NewPayee.jsp</from-view-id>
+    <navigation-case>
+        <description>
+        </description>
+      <from-outcome>CREATE_PAYEE_CANCELLED</from-outcome>
+      <to-view-id>/Payees.jsp</to-view-id>
+    </navigation-case>
+  </navigation-rule>
+
+  <navigation-rule>
+    <from-view-id>*</from-view-id>
+    <navigation-case>
+        <description>
+        </description>
+      <from-outcome>PAYEES</from-outcome>
+      <to-view-id>/Payees.jsp</to-view-id>
+    </navigation-case>
+  </navigation-rule>
+
+
+  <navigation-rule>
+    <from-view-id>*</from-view-id>
+    <navigation-case>
+        <description>
+        </description>
+      <from-outcome>create_expense_requested</from-outcome>
+      <to-view-id>/NewExpense.jsp</to-view-id>
+    </navigation-case>
+  </navigation-rule>
+  
+  <navigation-rule>
+    <from-view-id>*</from-view-id>
+    <navigation-case>
+        <description>
+        </description>
+      <from-outcome>ITEMIZE_EXPENSE_REQUESTED</from-outcome>
+      <to-view-id>/NewItemizedExpense.jsp</to-view-id>
+    </navigation-case>
+  </navigation-rule>
+
+  <navigation-rule>
+    <from-view-id>/NewExpense.jsp</from-view-id>
+    <navigation-case>
+        <description>
+        </description>
+      <from-outcome>expense_created</from-outcome>
+      <to-view-id>/Expenses.jsp</to-view-id>
+    </navigation-case>
+  </navigation-rule>
+
+  <navigation-rule>
+    <from-view-id>/NewExpense.jsp</from-view-id>
+    <navigation-case>
+        <description>
+        </description>
+      <from-outcome>create_expense_cancelled</from-outcome>
+      <to-view-id>/Expenses.jsp</to-view-id>
+    </navigation-case>
+  </navigation-rule>
+  
+  <navigation-rule>
+    <from-view-id>/NewItemizedExpense.jsp</from-view-id>
+    <navigation-case>
+        <description>
+        </description>
+      <from-outcome>ITEMIZE_EXPENSE_CANCELLED</from-outcome>
+      <to-view-id>/Expenses.jsp</to-view-id>
+    </navigation-case>
+  </navigation-rule>
+
+  <navigation-rule>
+    <from-view-id>/ExpenseItems.jsp</from-view-id>
+    <navigation-case>
+        <description>
+        </description>
+      <from-outcome>expense_created</from-outcome>
+      <to-view-id>/Expenses.jsp</to-view-id>
+    </navigation-case>
+  </navigation-rule>
+
+  <navigation-rule>
+    <from-view-id>/ExpenseItems.jsp</from-view-id>
+    <navigation-case>
+        <description>
+        </description>
+      <from-outcome>EXPENSE_ITEMS_ERROR</from-outcome>
+      <to-view-id>/ExpenseItems.jsp</to-view-id>
+    </navigation-case>
+  </navigation-rule>
+
+  <navigation-rule>
+    <from-view-id>/ExpenseItems.jsp</from-view-id>
+    <navigation-case>
+        <description>
+        </description>
+      <from-outcome>EXPENSE_ITEMS_CANCELLED</from-outcome>
+      <to-view-id>/NewExpense.jsp</to-view-id>
+    </navigation-case>
+  </navigation-rule>
+
+  <navigation-rule>
+    <from-view-id>*</from-view-id>
+    <navigation-case>
+        <description>
+        </description>
+      <from-outcome>home</from-outcome>
+      <to-view-id>/HomePage.jsp</to-view-id>
+    </navigation-case>
+  </navigation-rule>
+
+  <navigation-rule>
+    <from-view-id>*</from-view-id>
+    <navigation-case>
+        <description>
+        </description>
+      <from-outcome>logout_success</from-outcome>
+      <to-view-id>/welcomeJSF.jsp</to-view-id>
+    </navigation-case>
+  </navigation-rule>
+
+  <navigation-rule>
+    <from-view-id>/NewItemizedExpense.jsp</from-view-id>
+    <navigation-case>
+        <description>
+        </description>
+      <from-outcome>ITEMIZE_EXPENSE_CREATED</from-outcome>
+      <to-view-id>/Expenses.jsp</to-view-id>
+    </navigation-case>
+  </navigation-rule>
+
+  <navigation-rule>
+    <from-view-id>/ExpenseItems.jsp</from-view-id>
+    <navigation-case>
+        <description>
+        </description>
+      <from-outcome>expense_items_saved</from-outcome>
+      <to-view-id>/Expenses.jsp</to-view-id>
+    </navigation-case>
+  </navigation-rule>
+
+  <navigation-rule>
+    <from-view-id>/ExpenseItems.jsp</from-view-id>
+    <navigation-case>
+        <description>
+        </description>
+      <from-outcome>expense_items_rows_added</from-outcome>
+      <to-view-id>/ExpenseItems.jsp</to-view-id>
+    </navigation-case>
+  </navigation-rule>
+
+  <navigation-rule>
+    <from-view-id>*</from-view-id>
+    <navigation-case>
+        <description>
+        </description>
+      <from-outcome>show_bank_statement</from-outcome>
+      <to-view-id>/BankStatement.jsp</to-view-id>
+    </navigation-case>
+  </navigation-rule>
+
+  <navigation-rule>
+    <from-view-id>*</from-view-id>
+    <navigation-case>
+        <description>
+        </description>
+      <from-outcome>edit_account_user</from-outcome>
+      <to-view-id>/NewAccountUser.jsp</to-view-id>
+    </navigation-case>
+  </navigation-rule>
+
+  <navigation-rule>
+    <from-view-id>*</from-view-id>
+    <navigation-case>
+        <description>
+        </description>
+      <from-outcome>show_credit_card_statement</from-outcome>
+      <to-view-id>/CreditCardStatement.jsp</to-view-id>
+    </navigation-case>
+  </navigation-rule>
+
+  <navigation-rule>
+    <from-view-id>*</from-view-id>
+    <navigation-case>
+        <description>
+        </description>
+      <from-outcome>CREDIT_CARD_SUMMARY</from-outcome>
+      <to-view-id>/CreditCards.jsp</to-view-id>
+    </navigation-case>
+  </navigation-rule>
+
+  <navigation-rule>
+    <from-view-id>*</from-view-id>
+    <navigation-case>
+        <description>
+        </description>
+      <from-outcome>CREDIT_CARD_PAYMENT</from-outcome>
+      <to-view-id>/NewCreditCardPayment.jsp</to-view-id>
+    </navigation-case>
+  </navigation-rule>
+
+  <navigation-rule>
+    <from-view-id>*</from-view-id>
+    <navigation-case>
+        <description>
+        </description>
+      <from-outcome>CREDIT_CARD_CHARGES</from-outcome>
+      <to-view-id>/NewCreditCardChargeCredit.jsp</to-view-id>
+    </navigation-case>
+  </navigation-rule>
+
+  <navigation-rule>
+    <from-view-id>*</from-view-id>
+    <navigation-case>
+        <description>
+        </description>
+      <from-outcome>show_expenses</from-outcome>
+      <to-view-id>/Expenses.jsp</to-view-id>
+    </navigation-case>
+  </navigation-rule>
+
+  <navigation-rule>
+    <from-view-id>/AccountUsers.jsp</from-view-id>
+    <navigation-case>
+        <description>
+        </description>
+      <from-outcome>create_sub_user_requested</from-outcome>
+      <to-view-id>/NewAccountUser.jsp</to-view-id>
+    </navigation-case>
+  </navigation-rule>
+  
+  <navigation-rule>
+    <from-view-id>*</from-view-id>
+    <navigation-case>
+        <description>
+        </description>
+      <from-outcome>create_sub_user_requested</from-outcome>
+      <to-view-id>/NewAccountUser.jsp</to-view-id>
+    </navigation-case>
+  </navigation-rule>
+  
+  <navigation-rule>
+    <from-view-id>/AccountUsers.jsp</from-view-id>
+    <navigation-case>
+        <description>
+        </description>
+      <from-outcome>TRANSFER_CASH_REQUESTED</from-outcome>
+      <to-view-id>/NewCashTransfer.jsp</to-view-id>
+    </navigation-case>
+  </navigation-rule>
+  
+  <navigation-rule>
+    <from-view-id>/NewCashTransfer.jsp</from-view-id>
+    <navigation-case>
+        <description>
+        </description>
+      <from-outcome>TRANSFER_CASH_CANCELLED</from-outcome>
+      <to-view-id>/CashTransfers.jsp</to-view-id>
+    </navigation-case>
+  </navigation-rule>
+  
+  <navigation-rule>
+    <from-view-id>/NewCashTransfer.jsp</from-view-id>
+    <navigation-case>
+        <description>
+        </description>
+      <from-outcome>CASH_TRANSFERED</from-outcome>
+      <to-view-id>/CashTransfers.jsp</to-view-id>
+    </navigation-case>
+  </navigation-rule>
+
+  <navigation-rule>
+    <from-view-id>*</from-view-id>
+    <navigation-case>
+        <description>
+        </description>
+      <from-outcome>create_income_source_requested</from-outcome>
+      <to-view-id>/NewIncomeSource.jsp</to-view-id>
+    </navigation-case>
+  </navigation-rule>
+
+  <navigation-rule>
+    <from-view-id>*</from-view-id>
+    <navigation-case>
+        <description>
+        </description>
+      <from-outcome>CREATE_INCOME_SOURCE_CANCELLED</from-outcome>
+      <to-view-id>/IncomeSources.jsp</to-view-id>
+    </navigation-case>
+  </navigation-rule>
+
+  <navigation-rule>
+    <from-view-id>/NewIncomeSource.jsp</from-view-id>
+    <navigation-case>
+        <description>
+        </description>
+      <from-outcome>income_source_created</from-outcome>
+      <to-view-id>/IncomeSources.jsp</to-view-id>
+    </navigation-case>
+  </navigation-rule>
+
+  <navigation-rule>
+    <from-view-id>*</from-view-id>
+    <navigation-case>
+        <description>
+        </description>
+      <from-outcome>SHOW_INCOME_SOURCES</from-outcome>
+      <to-view-id>/IncomeSources.jsp</to-view-id>
+    </navigation-case>
+  </navigation-rule>
+  
+  <navigation-rule>
+    <from-view-id>/NewAccountUser.jsp</from-view-id>
+    <navigation-case>
+        <description>
+        </description>
+      <from-outcome>account_user_created</from-outcome>
+      <to-view-id>/AccountUsers.jsp</to-view-id>
+    </navigation-case>
+  </navigation-rule>
+  
+  <navigation-rule>
+    <from-view-id>*</from-view-id>
+    <navigation-case>
+        <description>
+        </description>
+      <from-outcome>account_user_summary</from-outcome>
+      <to-view-id>/AccountUsers.jsp</to-view-id>
+    </navigation-case>
+  </navigation-rule>
+
+  <navigation-rule>
+    <from-view-id>/NewAccountUser.jsp</from-view-id>
+    <navigation-case>
+        <description>
+        </description>
+      <from-outcome>CREATE_USER_CANCELLED</from-outcome>
+      <to-view-id>/AccountUsers.jsp</to-view-id>
+    </navigation-case>
+  </navigation-rule>
+
+  <navigation-rule>
+    <from-view-id>/NewDeposit.jsp</from-view-id>
+    <navigation-case>
+        <description>
+        </description>
+      <from-outcome>deposit_total_calculated</from-outcome>
+      <to-view-id>/NewDeposit.jsp</to-view-id>
+    </navigation-case>
+  </navigation-rule>
+
+  <navigation-rule>
+    <from-view-id>/NewDeposit.jsp</from-view-id>
+    <navigation-case>
+        <description>
+        </description>
+      <from-outcome>new_deposit_cancelled</from-outcome>
+      <to-view-id>/BankStatement.jsp</to-view-id>
+    </navigation-case>
+  </navigation-rule>
+
+  <navigation-rule>
+    <from-view-id>/NewDeposit.jsp</from-view-id>
+    <navigation-case>
+        <description>
+        </description>
+      <from-outcome>deposit_created</from-outcome>
+      <to-view-id>/BankStatement.jsp</to-view-id>
+    </navigation-case>
+  </navigation-rule>
+
+  <navigation-rule>
+    <from-view-id>/NewDeposit.jsp</from-view-id>
+    <navigation-case>
+        <description>
+        </description>
+      <from-outcome>DEPOSIT_CREATION_ERROR</from-outcome>
+      <to-view-id>/NewDeposit.jsp</to-view-id>
+    </navigation-case>
+  </navigation-rule>
+
+  <navigation-rule>
+    <from-view-id>/NewIncome.jsp</from-view-id>
+    <navigation-case>
+        <description>
+        </description>
+      <from-outcome>income_created</from-outcome>
+      <to-view-id>/CurrencyOnHandSummary.jsp</to-view-id>
+    </navigation-case>
+  </navigation-rule>
+
+  <navigation-rule>
+    <from-view-id>/NewIncome.jsp</from-view-id>
+    <navigation-case>
+        <description>
+        </description>
+      <from-outcome>new_income_cancelled</from-outcome>
+      <to-view-id>/CurrencyOnHandSummary.jsp</to-view-id>
+    </navigation-case>
+  </navigation-rule>
+
+  <navigation-rule>
+    <from-view-id>*</from-view-id>
+    <navigation-case>
+        <description>
+        </description>
+      <from-outcome>CREATE_NEW_INCOME_REQUESTED</from-outcome>
+      <to-view-id>/NewIncome.jsp</to-view-id>
+    </navigation-case>
+  </navigation-rule>
+
+  <navigation-rule>
+    <from-view-id>/NewMoneyOrder.jsp</from-view-id>
+    <navigation-case>
+        <description>
+        </description>
+      <from-outcome>MONEY_ORDER_CREATED</from-outcome>
+      <to-view-id>/CurrencyOnHandSummary.jsp</to-view-id>
+    </navigation-case>
+  </navigation-rule>
+
+  <navigation-rule>
+    <from-view-id>/NewMoneyOrder.jsp</from-view-id>
+    <navigation-case>
+        <description>
+        </description>
+      <from-outcome>NEW_MONEY_ORDER_CANCELLED</from-outcome>
+      <to-view-id>/CurrencyOnHandSummary.jsp</to-view-id>
+    </navigation-case>
+  </navigation-rule>
+  
+  <navigation-rule>
+    <from-view-id>*</from-view-id>
+    <navigation-case>
+        <description>
+        </description>
+      <from-outcome>CREATE_NEW_MONEY_ORDER_REQUESTED</from-outcome>
+      <to-view-id>/NewMoneyOrder.jsp</to-view-id>
+    </navigation-case>
+  </navigation-rule>
+
+
+
+
+  <navigation-rule>
+    <from-view-id>/NewLoan.jsp</from-view-id>
+    <navigation-case>
+        <description>
+        </description>
+      <from-outcome>CREATE_LOAN_CANCELLED</from-outcome>
+      <to-view-id>/LoanSummary.jsp</to-view-id>
+    </navigation-case>
+  </navigation-rule>
+
+  <navigation-rule>
+    <from-view-id>/NewLoan.jsp</from-view-id>
+    <navigation-case>
+        <description>
+        </description>
+      <from-outcome>LOAN_CREATED</from-outcome>
+      <to-view-id>/LoanSummary.jsp</to-view-id>
+    </navigation-case>
+  </navigation-rule>
+
+  <navigation-rule>
+    <from-view-id>*</from-view-id>
+    <navigation-case>
+        <description>
+        </description>
+      <from-outcome>SHOW_LOAN_SUMMARY</from-outcome>
+      <to-view-id>/LoanSummary.jsp</to-view-id>
+    </navigation-case>
+  </navigation-rule>
+
+
+  <navigation-rule>
+    <from-view-id>*</from-view-id>
+    <navigation-case>
+        <description>
+        </description>
+      <from-outcome>CREATE_LOAN_REQUESTED</from-outcome>
+      <to-view-id>/NewLoan.jsp</to-view-id>
+    </navigation-case>
+  </navigation-rule>
+  
+  <navigation-rule>
+    <from-view-id>*</from-view-id>
+    <navigation-case>
+        <description>
+        </description>
+      <from-outcome>TRANSFER_CASH_REQUESTED</from-outcome>
+      <to-view-id>/NewCashTransfer.jsp</to-view-id>
+    </navigation-case>
+  </navigation-rule>
+
+  <navigation-rule>
+    <from-view-id>*</from-view-id>
+    <navigation-case>
+        <description>
+        </description>
+      <from-outcome>SHOW_BORROWERS</from-outcome>
+      <to-view-id>/Borrowers.jsp</to-view-id>
+    </navigation-case>
+  </navigation-rule>
+
+
+  <navigation-rule>
+    <from-view-id>/NewLoanPayment.jsp</from-view-id>
+    <navigation-case>
+        <description>
+        </description>
+      <from-outcome>LOAN_PAYMENT_CREATED</from-outcome>
+      <to-view-id>/LoanHistory.jsp</to-view-id>
+    </navigation-case>
+  </navigation-rule>
+
+  <navigation-rule>
+    <from-view-id>/NewLoanPayment.jsp</from-view-id>
+    <navigation-case>
+        <description>
+        </description>
+      <from-outcome>LOAN_PAYMENT_CANCELLED</from-outcome>
+      <to-view-id>/LoanHistory.jsp</to-view-id>
+    </navigation-case>
+  </navigation-rule>
+
+  <navigation-rule>
+    <from-view-id>*</from-view-id>
+    <navigation-case>
+        <description>
+        </description>
+      <from-outcome>CREATE_LOAN_PAYMENT_REQUESTED</from-outcome>
+      <to-view-id>/NewLoanPayment.jsp</to-view-id>
+    </navigation-case>
+  </navigation-rule>
+
+  <navigation-rule>
+    <from-view-id>*</from-view-id>
+    <navigation-case>
+        <description>
+        </description>
+      <from-outcome>CREATE_BORROWER_REQUESTED</from-outcome>
+      <to-view-id>/NewBorrower.jsp</to-view-id>
+    </navigation-case>
+  </navigation-rule>
+
+  <navigation-rule>
+    <from-view-id>/NewCreditCardPayment.jsp</from-view-id>
+    <navigation-case>
+        <description>
+        </description>
+      <from-outcome>CREDIT_CARD_PAYMENT_CREATED</from-outcome>
+      <to-view-id>/CreditCardStatement.jsp</to-view-id>
+    </navigation-case>
+  </navigation-rule>
+
+  <navigation-rule>
+    <from-view-id>/NewCreditCardPayment.jsp</from-view-id>
+    <navigation-case>
+        <description>
+        </description>
+      <from-outcome>CREATE_CREDIT_CARD_PAYMENT_CANCELLED</from-outcome>
+      <to-view-id>/CreditCardStatement.jsp</to-view-id>
+    </navigation-case>
+  </navigation-rule>
+  
+  <navigation-rule>
+    <from-view-id>*</from-view-id>
+    <navigation-case>
+        <description>
+        </description>
+      <from-outcome>CREATE_CREDIT_CARD_PAYMENT_REQUESTED</from-outcome>
+      <to-view-id>/NewCreditCardPayment.jsp</to-view-id>
+    </navigation-case>
+  </navigation-rule>
+
+
+  <navigation-rule>
+    <from-view-id>*</from-view-id>
+    <navigation-case>
+        <description>
+        </description>
+      <from-outcome>BORROWER_CREATED</from-outcome>
+      <to-view-id>/Borrowers.jsp</to-view-id>
+    </navigation-case>
+  </navigation-rule>
+
+  <navigation-rule>
+    <from-view-id>*</from-view-id>
+    <navigation-case>
+        <description>
+        </description>
+      <from-outcome>CREATE_BORROWER_REQUESTED</from-outcome>
+      <to-view-id>/NewBorrower.jsp</to-view-id>
+    </navigation-case>
+  </navigation-rule>
+
+  <navigation-rule>
+    <from-view-id>*</from-view-id>
+    <navigation-case>
+        <description>
+        </description>
+      <from-outcome>SHOW_LOAN_HISTORY</from-outcome>
+      <to-view-id>/LoanHistory.jsp</to-view-id>
+    </navigation-case>
+  </navigation-rule>
+  
+  <navigation-rule>
+    <from-view-id>*</from-view-id>
+    <navigation-case>
+        <description>
+        </description>
+      <from-outcome>SHOW_CURRENCY_ON_HAND_SUMMARY</from-outcome>
+      <to-view-id>/CurrencyOnHandSummary.jsp</to-view-id>
+    </navigation-case>
+  </navigation-rule>
+
+  <navigation-rule>
+    <from-view-id>*</from-view-id>
+    <navigation-case>
+        <description>
+        </description>
+      <from-outcome>SHOW_EXPENSE_GROUP_REPORT</from-outcome>
+      <to-view-id>/ExpenseGroupReport.jsp</to-view-id>
+    </navigation-case>
+  </navigation-rule>
+  
+  <navigation-rule>
+    <from-view-id>*</from-view-id>
+    <navigation-case>
+        <description>
+        </description>
+      <from-outcome>SHOW_MANAGE_EXPENSE_CATEGORIES</from-outcome>
+      <to-view-id>/ManageExpenseCategories.jsp</to-view-id>
+    </navigation-case>
+  </navigation-rule>
+
+
+	<navigation-rule>
+    <from-view-id>*</from-view-id>
+    <navigation-case>
+        <description>
+        </description>
+      <from-outcome>cash_transfers_summary</from-outcome>
+      <to-view-id>/CashTransfers.jsp</to-view-id>
+    </navigation-case>
+  </navigation-rule>
+  
+  <navigation-rule>
+    <from-view-id>*</from-view-id>
+    <navigation-case>
+        <description>
+        </description>
+      <from-outcome>show_capital_report</from-outcome>
+      <to-view-id>/CapitalReport.jsp</to-view-id>
+    </navigation-case>
+  </navigation-rule>
+  
+  <navigation-rule>
+    <from-view-id>*</from-view-id>
+    <navigation-case>
+        <description>
+        </description>
+      <from-outcome>show_expense_group_report</from-outcome>
+      <to-view-id>/ExpenseGroupReport.jsp</to-view-id>
+    </navigation-case>
+  </navigation-rule>
+  
+  <navigation-rule>
+    <from-view-id>*</from-view-id>
+    <navigation-case>
+        <description>
+        </description>
+      <from-outcome>show_expenses_report</from-outcome>
+      <to-view-id>/Charts.jsp</to-view-id>
+    </navigation-case>
+  </navigation-rule>
+  
+  <navigation-rule>
+    <from-view-id>*</from-view-id>
+    <navigation-case>
+        <description>
+        </description>
+      <from-outcome>STATEMENT_COLUMN_SELECTION</from-outcome>
+      <to-view-id>/StatementColumnSelection.jsp</to-view-id>
+    </navigation-case>
+  </navigation-rule>
+  
+  <navigation-rule>
+    <from-view-id>*</from-view-id>
+    <navigation-case>
+        <description>
+        </description>
+      <from-outcome>STATEMENT_COMPARISON</from-outcome>
+      <to-view-id>/StatementComparison.jsp</to-view-id>
+    </navigation-case>
+  </navigation-rule>
+
+
+
+
+
+
+</faces-config>

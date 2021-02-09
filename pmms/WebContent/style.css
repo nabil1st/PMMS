@@ -1,0 +1,121 @@
+/* 
+    Document   : style
+    Created on : Aug 23, 2009, 6:38:09 PM
+    Author     : ndaoud
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+/* 
+   TODO customize this sample style
+   Syntax recommendation http://www.w3.org/TR/REC-CSS2/
+*/
+
+root { 
+    display: block;
+}
+
+.title {
+	font-family:arial;
+    font-style:bold;
+    font-size:30px;
+    color:#5A639C
+}
+
+.fieldlabel {
+	font-family:arial;
+	font-style:bold;
+    font-size:12px;
+    color:#191970
+}
+
+.requiredfieldlabel {
+	font-family:arial;
+    font-style:bold;
+    font-size:12px;
+    color:red
+}
+
+.fieldinput {
+	font-family:arial;
+    font-style:bold;
+    font-size:12px;
+    color:#191970
+}
+
+.subtitle {
+	font-family:arial;
+    font-style:bold;
+    font-size:26px;
+    color:#5A639C
+}
+
+.subname {
+    font-style:bold;
+    font-size:26px;
+    color:red
+}
+
+.whiteLabel {
+    font-size:12px;
+    color:white
+}
+
+.errorMessage {
+    font-style:bold;
+    font-size:larg;
+    color:red
+}
+
+.name {
+    font-style:normal;
+    font-size:larg;
+    color:red
+}
+
+.header {
+    font-style:normal;
+    font-size:medium;
+    font-weight:800;
+    color:black
+}
+
+.summary {
+	font-style:normal;
+	font-size:14px;
+	color:#0000FF	
+}
+
+.total {
+	font-style:normal;
+	font-size:14px;
+	color:red	
+}
+
+.value {
+	font-style:bold;
+	font-size:14px;
+	color:black	
+}
+
+.unmatchedStatementItem {
+	font-family:arial;
+    font-style:bold;
+    font-size:12px;
+    color:red
+}
+
+.unmatchedTransaction {
+	font-family:arial;
+    font-style:bold;
+    font-size:12px;
+    color:green
+}
+
+.matchedStatementItem {
+	font-family:arial;
+    font-style:bold;
+    font-size:12px;
+    color:black
+}
+

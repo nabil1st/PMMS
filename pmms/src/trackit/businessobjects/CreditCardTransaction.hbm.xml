@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+  <typedef class="trackit.util.GenericEnumUserType" name="transactionType">
+    <param name="enumClass">trackit.businessobjects.CreditCardTransactionType</param>
+    <param name="identifierMethod">toInt</param>
+    <param name="valueOfMethod">fromInt</param>
+  </typedef>
+  <typedef class="trackit.util.GenericEnumUserType" name="transactionReason">
+    <param name="enumClass">trackit.businessobjects.TransactionReason</param>
+    <param name="identifierMethod">toInt</param>
+    <param name="valueOfMethod">fromInt</param>
+  </typedef>
+  <class lazy="false" name="trackit.businessobjects.CreditCardTransaction" table="CREDIT_CARD_TRANSACTION">
+    <id column="CREDIT_CARD_TRANSACTION_ID" name="id">
+      <generator class="native"/>
+    </id>
+    <property column="CREDIT_CARD_TRANSACTION_TYPE_ID" name="transactionType" type="transactionType"/>
+    <property column="REASON_ID" name="transactionReason" type="transactionReason"/>
+    <property name="amount"/>
+    <property name="date"/>
+    <property column="CREDIT_CARD_ID" name="creditCardId"/>
+    <property column="DESCRIPTION" name="description"/>
+    <property column="TRANSACTION_INITIATOR_ID" name="initiatorId"/>
+    <property column="USER_ID" name="userId"/>
+  </class>
+</hibernate-mapping>

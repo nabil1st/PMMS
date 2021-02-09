@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+  <!-- lazy flag indicates that proxies will not be used when the object is requested -->
+  <class lazy="false" name="trackit.businessobjects.Account" table="ACCOUNTS">
+    <id column="ACCOUNT_ID" name="id">
+      <generator class="native"/>
+    </id>
+    <property name="accountDescription"/>
+    <property name="primaryUserId"/>
+    <property column="CASH_BALANCE" name="cashBalance"/>
+    <set lazy="false" name="users" table="ACCOUNT_USER">
+      <key column="ACCOUNT_ID"/>
+      <many-to-many class="trackit.businessobjects.User" column="USER_ID"/>
+    </set>
+    <set lazy="true" name="bankAccounts" table="ACCOUNT_BANK_ACCOUNT">
+      <key column="ACCOUNT_ID"/>
+      <many-to-many class="trackit.businessobjects.BankAccount" column="BANK_ACCOUNT_ID"/>
+    </set>
+    <set lazy="true" name="creditCards" table="ACCOUNT_CREDIT_CARD">
+      <key column="ACCOUNT_ID"/>
+      <many-to-many class="trackit.businessobjects.CreditCard" column="CREDIT_CARD_ID"/>
+    </set>
+    <set lazy="false" name="expenseGroups" table="ACCOUNT_EXPENSE_GROUP">
+      <key column="ACCOUNT_ID"/>
+      <many-to-many class="trackit.businessobjects.ExpenseGroup" column="EXPENSE_GROUP_ID"/>
+    </set>
+    <set lazy="false" name="expenseTypes" table="ACCOUNT_EXPENSE_TYPE">
+      <key column="ACCOUNT_ID"/>
+      <many-to-many class="trackit.businessobjects.ExpenseType" column="EXPENSE_TYPE_ID"/>
+    </set>
+    <set lazy="false" name="payees" table="ACCOUNT_PAYEE">
+      <key column="ACCOUNT_ID"/>
+      <many-to-many class="trackit.businessobjects.Payee" column="PAYEE_ID"/>
+    </set>
+    <set lazy="false" name="borrowers" table="ACCOUNT_BORROWER">
+      <key column="ACCOUNT_ID"/>
+      <many-to-many class="trackit.businessobjects.Borrower" column="BORROWER_ID"/>
+    </set>
+    <set lazy="false" name="incomeSources" table="ACCOUNT_INCOME_SOURCE">
+      <key column="ACCOUNT_ID"/>
+      <many-to-many class="trackit.businessobjects.IncomeSource" column="INCOME_SOURCE_ID"/>
+    </set>
+    <set lazy="true" name="expenses" table="ACCOUNT_EXPENSE">
+      <key column="ACCOUNT_ID"/>
+      <many-to-many class="trackit.businessobjects.Expense" column="EXPENSE_ID"/>
+    </set>
+  </class>
+</hibernate-mapping>

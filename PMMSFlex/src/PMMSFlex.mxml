@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" layout="vertical" verticalAlign="top" 
+    horizontalAlign="center" backgroundGradientColors="[#FFFFFF, #323232]" 
+    paddingTop="0" viewSourceURL="srcview/index.html" backgroundGradientAlphas="[1.0, 1.0]" 
+    preinitialize="handlePreInit(event)"
+    creationComplete="init(event)" width="800" height="600" horizontalScrollPolicy="off" verticalScrollPolicy="off"
+    xmlns:charts="com.iwobanas.charts.*" 
+	xmlns:comp="com.connectedpixel.charts.*"
+	xmlns:reports="reports.components.*"
+	xmlns:control="control.*"
+	xmlns:services="services.*">
+	
+	<services:Services id="reportsServices"/>
+	<control:MainController id="controller"/>
+    
+    <mx:Script>
+        <![CDATA[
+			import com.adobe.cairngorm.model.ModelLocator;
+			
+			import command.GetExpenseCategoryStatsCommand;
+			
+			import event.GetBankAccountsEvent;
+			import event.GetCreditCardsEvent;
+			import event.GetExpenseCategoriesEvent;
+			import event.GetExpenseCategoryStatsEvent;
+			import event.GetExpenseGroupsEvent;
+			import event.GetExpensePayeeStatsEvent;
+			import event.GetExpensePurposeTypesEvent;
+			import event.GetExpenseSubCategoryStatsEvent;
+			import event.GetPayeesEvent;
+			import event.GetPaymentMethodsEvent;
+			import event.GetUsersEvent;
+			
+			import model.PieChartsModelLocator;
+			
+			import mx.collections.ArrayCollection;
+			import mx.controls.Alert;
+			import mx.controls.DataGrid;
+			import mx.events.FlexEvent;
+			import mx.events.IndexChangedEvent;
+			import mx.formatters.CurrencyFormatter;
+			import mx.formatters.DateFormatter;
+			import mx.managers.PopUpManager;
+			import mx.rpc.AsyncToken;
+			import mx.rpc.events.ResultEvent;
+			
+			import reports.components.PieChartDialog;
+			import reports.components.Report;
+        
+            
+		[Bindable]
+        private var remoteServiceProxy:ExpenseReportsRemoteService;
+			
+        private var dataInitialized:Boolean = false;
+        
+        private var hostURL:String;
+			
+		[Bindable]
+		private var endPointURL:String;
+			
+		[Bindable]
+		private var pieChartsModelLocator:PieChartsModelLocator = PieChartsModelLocator.getInstance();
+        
+        private function handlePreInit(event:FlexEvent):void {
+
+    		hostURL = parameters['Host'];
+			endPointURL = "http://" + hostURL + ":8080/pmms/messagebroker/amf";
+//    		remoteServiceProxy  = new ExpenseReportsRemoteService(hostURL);
+		}
+            
+        private function init(event:Event):void {
+        	expenseCategoryRadioButton.selected = true;   
+        	viewStack.selectedChild = infoPanel;       	   	        	
+        }
+          
+        private function displayCategory(data:Object, field:String, index:Number, percentValue:Number):String {
+            return data.category + ": " + '\n' + "Total: " + data.amount + '\n' + data.percentage + "%";
+        }
+        
+        private function loadData():void {
+        	
+        	if (!showAllData.selected) {
+        		if (startDate.text == null || startDate.text.length == 0) {
+        			Alert.show("Start date is a required field");
+        			return;
+        		}
+        		
+        		if (endDate.text == null || endDate.text.length == 0) {
+        			Alert.show("End date is a required field");
+        			return;
+        		}
+        	}
+        	
+        	var accountId:String = Application.application.parameters.AccountId;
+        	
+        	viewStack.selectedChild = pieChart;
+        	
+        	
+			var sDate:Date = showAllData.selected?null:startDate.selectedDate;
+			var eDate:Date = showAllData.selected?null:endDate.selectedDate;
+			
+			if (payeeRadioButton.selected) {
+				new GetExpensePayeeStatsEvent(accountId, sDate, eDate).dispatch();
+        	} else if (expenseCategoryRadioButton.selected) {
+				new GetExpenseCategoryStatsEvent(accountId, sDate, eDate).dispatch();
+        	} else if (expenseTypeRadioButton.selected) {
+				new GetExpenseSubCategoryStatsEvent(accountId, sDate, eDate).dispatch();
+        	} 
+        }
+        
+        private function handleResult(result:ArrayCollection):void {
+        	chart.dataProvider = result;	
+        }
+        
+        private function handlePieChart(event:Event):void {    
+//        	userService.getAllUsersForAccount(26);    	        	
+        	loadData();
+//			test.sayHello();
+        }
+			
+		private function handleShowLargePieChart(event:Event):void {
+			var pieChartDialog:PieChartDialog = new PieChartDialog();
+//			pieChartDialog.dataProvider = ArrayCollection(chart.dataProvider);
+			
+			PopUpManager.addPopUp(pieChartDialog, this, true);
+			PopUpManager.centerPopUp(pieChartDialog);
+		}
+        
+        private function handleTabIndexChange(event:IndexChangedEvent):void {
+        	if (mainTab.selectedIndex == 1 && !dataInitialized) {
+        		var accountId:String = Application.application.parameters.AccountId;
+        		new GetUsersEvent(accountId).dispatch();
+				new GetBankAccountsEvent(accountId).dispatch();
+				new GetCreditCardsEvent(accountId).dispatch();
+				new GetExpenseCategoriesEvent(accountId).dispatch();
+				new GetPayeesEvent(accountId).dispatch();
+				new GetExpenseGroupsEvent(accountId).dispatch();
+				new GetPaymentMethodsEvent().dispatch();
+				new GetExpensePurposeTypesEvent().dispatch();
+				
+				
+				
+//				remoteServiceProxy.callGetUsersForAccount(accountId, expenseData.handleUserData);
+//        		remoteServiceProxy.callGetBankAccountsForAccount(accountId, expenseData.handleBankAccountData);
+//        		remoteServiceProxy.callGetCreditCardsForAccount(accountId, expenseData.handleCreditCardData);
+//        		remoteServiceProxy.callGetExpenseCategoriesForAccount(accountId, expenseData.handleExpenseCategoryData);
+//        		//remoteServiceProxy.callGetExpenseSubTypesForAccount(accountId, handleExpenseTypeData);
+//        		remoteServiceProxy.callGetPayeesForAccount(accountId, expenseData.handlePayeeData);
+//        		remoteServiceProxy.callGetProjectsForAccount(accountId, expenseData.handleProjectData);
+//        		remoteServiceProxy.callGetPaymentMethods(expenseData.handlePaymentMethodData);
+//        		remoteServiceProxy.callGetExpensePurposeTypes(expenseData.handleExpensePurposeData);
+        		dataInitialized = true;		
+        	}
+        }
+
+        /* private function handleResult(event:Event):void {
+        	trace("handle result");
+        	
+        }
+        
+        private function handleFault(event:Event):void {
+        	trace("handle fault");
+        } */
+			
+
+        ]]>
+    </mx:Script>
+    
+    <!--<mx:RemoteObject
+		id="userService" 
+		destination="userService"
+		showBusyCursor="true" endpoint="http://localhost:8080/Abacus/messagebroker/amf"
+		fault="handleFault(event)" result="handleResult(event)">
+	</mx:RemoteObject>-->
+    
+    
+    <!--<mx:WebService id="srv" wsdl="http://localhost:8080/PMMS/services/expensereports?wsdl" useProxy="false" showBusyCursor="true">
+            <mx:result>
+            	chart.dataProvider = event.result;            	                
+            </mx:result>
+    </mx:WebService>-->    
+	
+	<mx:Style>
+		ScrollableAxisRenderer {
+			scrollBarUpArrowUpSkin: Embed(source='assets/flex_scroll_skins.swf', symbol='ScrollArrowUp_upSkin');
+			scrollBarDownArrowUpSkin: Embed(source='assets/flex_scroll_skins.swf', symbol='ScrollArrowDown_upSkin');
+			scrollBarUpArrowOverSkin: Embed(source='assets/flex_scroll_skins.swf', symbol='ScrollArrowUp_overSkin');
+			scrollBarDownArrowOverSkin: Embed(source='assets/flex_scroll_skins.swf', symbol='ScrollArrowDown_overSkin');
+			scrollBarUpArrowDownSkin: Embed(source='assets/flex_scroll_skins.swf', symbol='ScrollArrowUp_downSkin');
+			scrollBarDownArrowDownSkin: Embed(source='assets/flex_scroll_skins.swf', symbol='ScrollArrowDown_downSkin');
+			
+			scrollBarThumbUpSkin: Embed(source='assets/flex_scroll_skins.swf', symbol='ScrollThumb_upSkin');
+			scrollBarThumbOverSkin: Embed(source='assets/flex_scroll_skins.swf', symbol='ScrollThumb_overSkin');
+			scrollBarThumbDownSkin: Embed(source='assets/flex_scroll_skins.swf', symbol='ScrollThumb_downSkin');
+		}
+	</mx:Style>
+        	
+    <mx:VBox width="798" horizontalScrollPolicy="off" verticalScrollPolicy="off">
+       	<mx:HBox width="798" height="600" horizontalScrollPolicy="off" verticalScrollPolicy="off">
+    		<mx:TabNavigator id="mainTab" width="798" height="600" fontSize="12" change="handleTabIndexChange(event);" backgroundColor="#FFFFFF">
+    			<mx:Canvas label="Pie Charts" width="100%" height="100%" horizontalScrollPolicy="off" verticalScrollPolicy="off">
+    				<mx:HBox x="10" y="0" width="750" height="415" horizontalScrollPolicy="off" verticalScrollPolicy="off">
+    					<mx:VBox height="100%" width="340" horizontalScrollPolicy="off" verticalScrollPolicy="off" verticalAlign="middle">
+    						<mx:VBox height="297" width="339" paddingLeft="5" paddingRight="5" paddingTop="10" paddingBottom="5" verticalScrollPolicy="off" horizontalScrollPolicy="off">
+    							<mx:HBox width="100%" horizontalScrollPolicy="off" verticalScrollPolicy="off" height="50">
+    								<mx:VBox height="52" width="328" horizontalScrollPolicy="off" verticalScrollPolicy="off">
+    									<mx:Label text="Specify the time period " color="#0000FF" fontSize="14" fontWeight="bold"/>
+    									<mx:HBox width="100%" height="20" verticalAlign="middle">
+    										<mx:CheckBox label="Show all data" id="showAllData" paddingLeft="2" fontSize="12" fontWeight="bold"/>
+    										<mx:Label text="(Or specify Start and End dates)" fontSize="10" color="#FB1004"/>
+    									</mx:HBox>
+    								</mx:VBox>
+    							</mx:HBox>
+    							<mx:HBox width="100%" horizontalScrollPolicy="off" verticalScrollPolicy="off">
+    								<mx:Label text="Start Date" width="99" fontSize="12" fontWeight="bold"/>
+    								<mx:DateField id="startDate"/>
+    							</mx:HBox>
+    							<mx:HBox width="100%" horizontalScrollPolicy="off" verticalScrollPolicy="off">
+    								<mx:Label text="End Date" width="100" fontSize="12" fontWeight="bold"/>
+    								<mx:DateField id="endDate"/>
+    							</mx:HBox>
+    							<mx:Label text="Select the data to chart" color="#0000FF" fontSize="14" fontWeight="bold"/>
+    							<mx:RadioButtonGroup id="pieChartDataSelectionGroup"/>
+    							<mx:RadioButton id="expenseCategoryRadioButton" label="Expense category data" groupName="pieChartDataSelectionGroup" fontSize="12" fontWeight="bold"/>
+    							<mx:RadioButton id="expenseTypeRadioButton" label="Expense type data" groupName="pieChartDataSelectionGroup" fontSize="12" fontWeight="bold"/>
+    							<mx:RadioButton id="payeeRadioButton" label="Payee data" groupName="pieChartDataSelectionGroup" fontSize="12" fontWeight="bold"/>
+    							<mx:HBox width="100%" horizontalAlign="center" paddingLeft="5" paddingRight="5" paddingTop="5" paddingBottom="5" horizontalScrollPolicy="off" verticalScrollPolicy="off">
+    								<mx:Button label="Show Chart" click="handlePieChart(event);"/>
+    							</mx:HBox>
+    						</mx:VBox>
+    					</mx:VBox>
+    					<mx:VRule width="1" height="406"/>
+    					<mx:ViewStack id="viewStack" height="411" width="397">
+    						<mx:VBox id="infoPanel" height="100%" width="100%" horizontalScrollPolicy="off" verticalScrollPolicy="off" verticalAlign="middle" horizontalAlign="center">    							
+    							<mx:Label text="Click on &quot;Show Chart&quot; to view the chart" fontSize="14" color="#FA0606" width="351" textAlign="center"/>
+    						</mx:VBox>
+    						<mx:VBox id="pieChart" height="100%" width="100%" horizontalScrollPolicy="off" verticalScrollPolicy="off" >
+    							<mx:PieChart id="chart" height="100%" width="100%" paddingRight="5" paddingLeft="5" color="0x323232"
+		    					   showDataTips="true" dataProvider="{pieChartsModelLocator.pieChartData}">
+		    					   
+		    					   <mx:series>
+		    					       <mx:PieSeries labelPosition="callout" field="percentage" labelFunction="displayCategory">
+		    					           <mx:calloutStroke>
+		    					               <mx:Stroke weight="0" color="0x888888" alpha="1.0"/>
+		    					           </mx:calloutStroke>
+		    					           <mx:radialStroke>
+		    					               <mx:Stroke weight="0" color="#FFFFFF" alpha="0.20"/>
+		    					           </mx:radialStroke>
+		    					           <mx:stroke>
+		    					               <mx:Stroke color="0" alpha="0.20" weight="2"/>
+		    					           </mx:stroke>
+		    					       </mx:PieSeries>
+		    					   </mx:series>
+    							</mx:PieChart>	
+								<mx:HBox width="100%" horizontalAlign="center" horizontalScrollPolicy="off" verticalScrollPolicy="off" paddingTop="5" paddingBottom="5">
+									<mx:Button id="showLargePieChart" click="handleShowLargePieChart(event);" label="Enlarge It!"/>
+								</mx:HBox>
+    						</mx:VBox>
+    					</mx:ViewStack>    					
+    				</mx:HBox>
+    			</mx:Canvas>
+				
+				<reports:ExpenseData id="expenseData"/>
+    			  			
+    		</mx:TabNavigator>
+    	</mx:HBox>
+    	<!--<mx:Panel title="PieChart Control" layout="vertical" color="0xffffff" borderAlpha="0.15" height="400" width="600"
+             paddingTop="10" paddingRight="10" paddingBottom="10" paddingLeft="10" horizontalAlign="center">-->
+             
+        <!--</mx:Panel>-->	
+    </mx:VBox>
+    
+</mx:Application>

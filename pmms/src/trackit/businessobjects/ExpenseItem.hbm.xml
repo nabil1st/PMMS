@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+  <typedef class="trackit.util.GenericEnumUserType" name="expensePurpose">
+    <param name="enumClass">trackit.businessobjects.ExpensePurpose</param>
+    <param name="identifierMethod">toInt</param>
+    <param name="valueOfMethod">fromInt</param>
+  </typedef>
+  <class lazy="false" name="trackit.businessobjects.ExpenseItem" table="EXPENSE_ITEM">
+    <id column="EXPENSE_ITEM_ID" name="id">
+      <generator class="native"/>
+    </id>
+    <property name="amount"/>
+    <property column="EXPENSE_GROUP_ID" name="expenseGroupId"/>
+    <property column="EXPENSE_TYPE_ID" name="expenseTypeId"/>
+    <property name="description"/>
+    <property name="tax"/>
+    <property column="EXPENSE_PURPOSE_ID" name="expensePurpose" type="expensePurpose"/>
+    <property column="BORROWER_ID" name="borrowerId"/>
+  </class>
+</hibernate-mapping>

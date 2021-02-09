@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+  <!-- lazy flag indicates that proxies will not be used when the object is requested -->
+  <class lazy="false" name="trackit.businessobjects.Deposit" table="DEPOSIT">
+    <id column="DEPOSIT_ID" name="id">
+      <generator class="native"/>
+    </id>
+    <property column="TOTAL_CASH" name="totalCash"/>
+    <property column="BANK_ACCOUNT_ID" name="bankAccountId"/>
+    <property column="DATE" name="date"/>
+    <property column="USER_ID" name="userId"/>
+    <set lazy="true" name="depositItems" table="DEPOSIT_CURRENCY_ON_HAND">
+      <key column="DEPOSIT_ID"/>
+      <many-to-many class="trackit.businessobjects.CurrencyOnHand" column="CURRENCY_ON_HAND_ID"/>
+    </set>
+  </class>
+</hibernate-mapping>

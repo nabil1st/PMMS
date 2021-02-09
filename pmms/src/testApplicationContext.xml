@@ -1,0 +1,435 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN"
+"http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+
+	<!-- ========================= Start of PERSISTENCE DEFINITIONS ========================= -->
+
+	<!-- DataSource Definition -->
+	<bean id="dataSource"
+      	class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+		<property name="driverClassName">
+			<value>com.mysql.jdbc.Driver</value>
+		</property>
+		<property name="url">
+			<value>jdbc:mysql:///expenses_test</value>
+		</property>
+		<property name="username">
+			<value>admin</value>
+		</property>
+		<property name="password">
+			<value>admin</value>
+		</property>
+	</bean>
+
+	<!-- Hibernate SessionFactory Definition -->
+	<bean id="sessionFactory" class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+		<property name="mappingResources">
+			<list>
+				<value>trackit/businessobjects/User.hbm.xml</value>
+                <value>trackit/businessobjects/Account.hbm.xml</value>
+                <value>trackit/businessobjects/BankAccount.hbm.xml</value>
+                <value>trackit/businessobjects/BankAccountTransaction.hbm.xml</value>
+                <value>trackit/businessobjects/CreditCard.hbm.xml</value>
+                <value>trackit/businessobjects/CreditCardTransaction.hbm.xml</value>
+                <value>trackit/businessobjects/ExpenseGroup.hbm.xml</value>
+                <value>trackit/businessobjects/ExpenseType.hbm.xml</value>
+                <value>trackit/businessobjects/Payee.hbm.xml</value>
+                <value>trackit/businessobjects/Expense.hbm.xml</value>
+                <value>trackit/businessobjects/ExpenseItem.hbm.xml</value>
+                <value>trackit/businessobjects/IncomeSource.hbm.xml</value>
+                <value>trackit/businessobjects/Income.hbm.xml</value>
+                <value>trackit/businessobjects/Deposit.hbm.xml</value>
+                <value>trackit/businessobjects/CurrencyOnHand.hbm.xml</value>
+                <value>trackit/businessobjects/MoneyOrderFee.hbm.xml</value>
+                <value>trackit/businessobjects/CashTransaction.hbm.xml</value>
+                <value>trackit/businessobjects/Loan.hbm.xml</value>
+                <value>trackit/businessobjects/CreditCardPayment.hbm.xml</value>
+                <value>trackit/businessobjects/Borrower.hbm.xml</value>
+                <value>trackit/businessobjects/ExpenseCategory.hbm.xml</value>
+                <value>trackit/businessobjects/ExpenseSubType.hbm.xml</value>
+			</list>
+		</property>
+
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
+				<prop key="hibernate.show_sql">true</prop>
+				<prop key="hibernate.cglib.use_reflection_optimizer">true</prop>
+				<prop key="hibernate.cache.provider_class">org.hibernate.cache.NoCacheProvider</prop>
+			</props>
+		</property>
+
+		<property name="dataSource">
+			<ref bean="dataSource"/>
+		</property>
+	</bean>
+
+
+
+    <!--bean id="hibernateInterceptor" class="org.springframework.orm.hibernate3.HibernateInterceptor">
+        <property name="sessionFactory">
+            <ref bean="sessionFactory"/>
+        </property>
+    </bean-->
+
+
+	<!-- Spring Data Access Exception Translator Defintion -->
+	<bean id="jdbcExceptionTranslator" class="org.springframework.jdbc.support.SQLErrorCodeSQLExceptionTranslator">
+		<property name="dataSource"><ref bean="dataSource"/></property>
+	</bean>
+
+	<!-- Hibernate Template Defintion -->
+	<bean id="hibernateTemplate" class="org.springframework.orm.hibernate3.HibernateTemplate">
+		<property name="sessionFactory"><ref bean="sessionFactory"/></property>
+		<property name="jdbcExceptionTranslator"><ref bean="jdbcExceptionTranslator"/></property>
+	</bean>
+
+    <!--bean id="hibernateTemplateObject" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <property name="target"><ref bean="hibernateTemplate"/></property>
+        <property name="proxyInterfaces">
+            <value>org.springframework.orm.hibernate3.HibernateOperations</value>
+        </property>
+        <property name="interceptorNames">
+        <list>
+            <value>hibernateInterceptor</value>
+        </list>
+        </property>
+    </bean-->
+
+	<!-- Catalog DAO Definition: Hibernate implementation -->
+	<bean id="userDao" class="trackit.dao.hibernate.UserDaoHibernateImpl">
+		<property name="hibernateTemplate"><ref bean="hibernateTemplate"/></property>
+	</bean>
+
+    <bean id="accountDao" class="trackit.dao.hibernate.AccountDaoHibernateImpl">
+		<property name="hibernateTemplate"><ref bean="hibernateTemplate"/></property>
+	</bean>
+
+    <bean id="bankAccountDao" class="trackit.dao.hibernate.BankAccountDaoHibernateImpl">
+		<property name="hibernateTemplate"><ref bean="hibernateTemplate"/></property>
+	</bean>
+
+    <bean id="bankAccountTransactionDao" class="trackit.dao.hibernate.BankAccountTransactionDaoHibernateImpl">
+		<property name="hibernateTemplate"><ref bean="hibernateTemplate"/></property>
+	</bean>
+
+    <bean id="creditCardDao" class="trackit.dao.hibernate.CreditCardDaoHibernateImpl">
+		<property name="hibernateTemplate"><ref bean="hibernateTemplate"/></property>
+	</bean>
+
+    <bean id="creditCardTransactionDao" class="trackit.dao.hibernate.CreditCardTransactionDaoHibernateImpl">
+		<property name="hibernateTemplate"><ref bean="hibernateTemplate"/></property>
+	</bean>
+
+    <bean id="expenseGroupDao" class="trackit.dao.hibernate.ExpenseGroupDaoHibernateImpl">
+		<property name="hibernateTemplate"><ref bean="hibernateTemplate"/></property>
+	</bean>
+
+    <bean id="expenseTypeDao" class="trackit.dao.hibernate.ExpenseTypeDaoHibernateImpl">
+		<property name="hibernateTemplate"><ref bean="hibernateTemplate"/></property>
+	</bean>
+
+    <bean id="payeeDao" class="trackit.dao.hibernate.PayeeDaoHibernateImpl">
+		<property name="hibernateTemplate"><ref bean="hibernateTemplate"/></property>
+	</bean>
+
+    <bean id="expenseDao" class="trackit.dao.hibernate.ExpenseDaoHibernateImpl">
+		<property name="hibernateTemplate"><ref bean="hibernateTemplate"/></property>
+	</bean>
+
+    <bean id="expenseItemDao" class="trackit.dao.hibernate.ExpenseItemDaoHibernateImpl">
+		<property name="hibernateTemplate"><ref bean="hibernateTemplate"/></property>
+	</bean>
+
+    <bean id="incomeSourceDao" class="trackit.dao.hibernate.IncomeSourceDaoHibernateImpl">
+		<property name="hibernateTemplate"><ref bean="hibernateTemplate"/></property>
+	</bean>
+
+    <bean id="incomeDao" class="trackit.dao.hibernate.IncomeDaoHibernateImpl">
+		<property name="hibernateTemplate"><ref bean="hibernateTemplate"/></property>
+	</bean>
+
+    <bean id="depositDao" class="trackit.dao.hibernate.DepositDaoHibernateImpl">
+		<property name="hibernateTemplate"><ref bean="hibernateTemplate"/></property>
+	</bean>
+
+    <bean id="currencyOnHandDao" class="trackit.dao.hibernate.CurrencyOnHandDaoHibernateImpl">
+		<property name="hibernateTemplate"><ref bean="hibernateTemplate"/></property>
+	</bean>
+
+    <bean id="moneyOrderDao" class="trackit.dao.hibernate.MoneyOrderDaoHibernateImpl">
+		<property name="hibernateTemplate"><ref bean="hibernateTemplate"/></property>
+	</bean>
+
+    <bean id="cashTransactionDao" class="trackit.dao.hibernate.CashTransactionDaoHibernateImpl">
+		<property name="hibernateTemplate"><ref bean="hibernateTemplate"/></property>
+	</bean>
+
+    <bean id="loanDao" class="trackit.dao.hibernate.LoanDaoHibernateImpl">
+		<property name="hibernateTemplate"><ref bean="hibernateTemplate"/></property>
+	</bean>
+
+    <bean id="borrowerDao" class="trackit.dao.hibernate.BorrowerDaoHibernateImpl">
+		<property name="hibernateTemplate"><ref bean="hibernateTemplate"/></property>
+	</bean>
+
+    <bean id="expenseCategoryDao" class="trackit.dao.hibernate.ExpenseCategoryDaoHibernateImpl">
+		<property name="hibernateTemplate"><ref bean="hibernateTemplate"/></property>
+	</bean>
+
+
+	<!-- ========================= Start of SERVICE DEFINITIONS ========================= -->
+
+	<!-- Hibernate Transaction Manager Definition -->
+	<bean id="transactionManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+		<property name="sessionFactory"><ref local="sessionFactory"/></property>
+	</bean>
+
+	<!--  User Service Defintion -->
+	<bean id="userService" class="trackit.service.impl.UserServiceImpl">
+		<property name="userDao"><ref local="userDao"/></property>
+	</bean>
+
+    <bean id="accountService" class="trackit.service.impl.AccountServiceImpl">
+		<property name="accountDao"><ref local="accountDao"/></property>
+	</bean>
+
+
+    <!--bean id="accountObject" class="trackit.businessobjects.Account"/>
+
+    <bean id="accountServicesObject" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <property name="target"><ref bean="accountService"/></property>
+        <property name="proxyInterfaces">
+            <value>trackit.service.AccountService</value>
+        </property>
+        <property name="interceptorNames">
+        <list>
+            <value>hibernateInterceptor</value>
+        </list>
+        </property>
+    </bean>
+
+    <bean id="accountProxy" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <property name="target"><ref bean="accountObject"/></property>
+        <property name="proxyInterfaces">
+            <value>trackit.businessobjects.IAccount</value>
+        </property>
+        <property name="interceptorNames">
+        <list>
+            <value>hibernateInterceptor</value>
+        </list>
+        </property>
+    </bean>
+
+    <bean id="userObject" class="trackit.businessobjects.User"/>
+
+    <bean id="userProxy" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <property name="target"><ref bean="userObject"/></property>
+        <property name="proxyInterfaces">
+            <value>trackit.businessobjects.IAccount</value>
+        </property>
+        <property name="interceptorNames">
+        <list>
+            <value>hibernateInterceptor</value>
+        </list>
+        </property>
+    </bean-->
+
+    <bean id="bankAccountService" class="trackit.service.impl.BankAccountServiceImpl">
+		<property name="bankAccountDao"><ref local="bankAccountDao"/></property>
+        <property name="bankAccountTransactionDao"><ref local="bankAccountTransactionDao"/></property>
+	</bean>
+
+    <bean id="creditCardService" class="trackit.service.impl.CreditCardServiceImpl">
+		<property name="creditCardDao"><ref local="creditCardDao"/></property>
+        <property name="creditCardTransactionDao"><ref local="creditCardTransactionDao"/></property>
+	</bean>
+
+    <bean id="expenseGroupService" class="trackit.service.impl.ExpenseGroupServiceImpl">
+		<property name="expenseGroupDao"><ref local="expenseGroupDao"/></property>
+	</bean>
+
+    <bean id="expenseTypeService" class="trackit.service.impl.ExpenseTypeServiceImpl">
+		<property name="expenseTypeDao"><ref local="expenseTypeDao"/></property>
+	</bean>
+
+    <bean id="payeeService" class="trackit.service.impl.PayeeServiceImpl">
+		<property name="payeeDao"><ref local="payeeDao"/></property>
+	</bean>
+
+    <bean id="expenseService" class="trackit.service.impl.ExpenseServiceImpl">
+		<property name="expenseDao"><ref local="expenseDao"/></property>
+        <property name="expenseItemDao"><ref local="expenseItemDao"/></property>
+	</bean>
+
+    <bean id="incomeService" class="trackit.service.impl.IncomeServiceImpl">
+		<property name="incomeSourceDao"><ref local="incomeSourceDao"/></property>
+        <property name="incomeDao"><ref local="incomeDao"/></property>
+	</bean>
+
+    <bean id="depositService" class="trackit.service.impl.DepositServiceImpl">
+		<property name="depositDao"><ref local="depositDao"/></property>
+	</bean>
+
+    <bean id="currencyOnHandService" class="trackit.service.impl.CurrencyOnHandServiceImpl">
+		<property name="currencyOnHandDao"><ref local="currencyOnHandDao"/></property>
+	</bean>
+
+    <bean id="moneyOrderService" class="trackit.service.impl.MoneyOrderServiceImpl">
+		<property name="moneyOrderDao"><ref local="moneyOrderDao"/></property>
+	</bean>
+
+    <bean id="cashService" class="trackit.service.impl.CashServiceImpl">
+		<property name="cashTransactionDao"><ref local="cashTransactionDao"/></property>
+	</bean>
+
+    <bean id="loanService" class="trackit.service.impl.LoanServiceImpl">
+		<property name="loanDao"><ref local="loanDao"/></property>
+	</bean>
+
+    <bean id="borrowerService" class="trackit.service.impl.BorrowerServiceImpl">
+		<property name="borrowerDao"><ref local="borrowerDao"/></property>
+	</bean>
+
+    <bean id="expenseCategoryService" class="trackit.service.impl.ExpenseCategoryServiceImpl">
+		<property name="expenseCategoryDao"><ref local="expenseCategoryDao"/></property>
+	</bean>
+
+
+
+    <!--bean id="expenseServicesObject" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <property name="target"><ref bean="expenseService"/></property>
+        <property name="proxyInterfaces">
+            <value>trackit.service.ExpenseService</value>
+        </property>
+        <property name="interceptorNames">
+        <list>
+            <value>hibernateInterceptor</value>
+        </list>
+        </property>
+    </bean-->
+
+	<!-- Catalog Service Definition -->
+	<!-- bean id="catalogServiceTarget" class="catalog.model.service.impl.CatalogServiceImpl">
+		<property name="catalogDao"><ref local="catalogDao"/></property>
+	</bean -->
+
+	<!-- Cached Catalog Service Definition -->
+	<!--bean id="catalogServiceTarget" class="catalog.model.service.impl.CachedCatalogServiceImpl" init-method="init">
+		<property name="catalogDao"><ref local="catalogDao"/></property>
+	</bean-->
+
+	<!-- Transactional proxy for the Catalog Service -->
+	<!--bean id="catalogService" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager"><ref local="transactionManager"/></property>
+		<property name="target"><ref local="catalogServiceTarget"/></property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="get*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="save*">PROPAGATION_REQUIRED</prop>
+				<prop key="update*">PROPAGATION_REQUIRED</prop>BankAccount ba = BankAccountBuilder.createBankAccount(this);
+            ba.setBalance(currentBalance);
+
+            ba = this.serviceLocator.getBankAccountService().saveBankAccount(ba);
+
+            // TODO : fix and reactivate this code
+            if (currentBalance.doubleValue() > 0) {
+                BankAccountTransaction tx = new BankAccountTransaction();
+                tx.setAmount(currentBalance);
+                tx.setDate(new Date());
+                tx.setTransactionType(BankTransactionType.OPENING_BALANCE);
+                tx.setBankAccountId(ba.getId());
+                tx.setDescription("Opening Blance");
+
+                Long currentUserId = Long.parseLong( FacesUtils.getSessionBean().getCurrentUserId());
+                tx.setUserId(currentUserId);
+
+                tx = this.serviceLocator.getBankAccountService().saveBankAccountTransaction(tx);
+
+//                Set<BankAccountTransaction> txs = new HashSet<BankAccountTransaction>();
+//                txs.add(tx);
+//                ba.setTransactions(txs);
+//
+//                ba = this.serviceLocator.getBankAccountService().saveBankAccount(ba);
+            }
+
+            Account account = this.serviceLocator.
+                    getAccountService().findAccount(
+                        FacesUtils.getSessionBean().getCurrentAccountId());
+            Set<BankAccount> bankAccounts = account.getBankAccounts();
+            if (bankAccounts == null) {
+                bankAccounts = new HashSet<BankAccount>();
+            }
+            bankAccounts.add(ba);
+            account.setBankAccounts(bankAccounts);
+
+            this.serviceLocator.getAccountService().saveAccount(account);
+
+            FacesUtils.getSessionBean().setBankAccountsListDirty(true);
+				<prop key="delete*">PROPAGATION_REQUIRED</prop>
+			</props>
+		</property>
+	</bean-->
+
+    <bean id="hibernateTransactionManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+        <property name="sessionFactory" ref="sessionFactory" />
+    </bean>
+
+    <bean id="service" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+        <property name="transactionManager" ref="hibernateTransactionManager"/>
+        <property name="proxyTargetClass" value="true"/>
+        <property name="target" ref="accountService" />
+        <property name="transactionAttributes">
+        <props>
+            <prop key="*">PROPAGATION_REQUIRED</prop>
+        </props>
+        </property>
+    </bean>
+
+    <bean id="accountTransactionalService" class="trackit.transaction.service.impl.AccountTransactionalServiceImpl">
+		<property name="transactionManager"><ref local="hibernateTransactionManager"/></property>
+	</bean>
+
+    <bean id="bankAccountTransactionalService" class="trackit.transaction.service.impl.BankAccountTransactionalServiceImpl">
+		<property name="transactionManager"><ref local="hibernateTransactionManager"/></property>
+	</bean>
+
+    <bean id="creditCardTransactionalService" class="trackit.transaction.service.impl.CreditCardTransactionalServiceImpl">
+		<property name="transactionManager"><ref local="hibernateTransactionManager"/></property>
+	</bean>
+
+    <bean id="depositTransactionalService" class="trackit.transaction.service.impl.DepositTransactionalServiceImpl">
+		<property name="transactionManager"><ref local="hibernateTransactionManager"/></property>
+	</bean>
+
+    <bean id="expenseTransactionalService" class="trackit.transaction.service.impl.ExpenseTransactionalServiceImpl">
+		<property name="transactionManager"><ref local="hibernateTransactionManager"/></property>
+	</bean>
+
+    <bean id="incomeTransactionalService" class="trackit.transaction.service.impl.IncomeTransactionalServiceImpl">
+		<property name="transactionManager"><ref local="hibernateTransactionManager"/></property>
+	</bean>
+
+    <bean id="loanTransactionalService" class="trackit.transaction.service.impl.LoanTransactionalServiceImpl">
+		<property name="transactionManager"><ref local="hibernateTransactionManager"/></property>
+	</bean>
+
+    <bean id="moneyOrderTransactionalService" class="trackit.transaction.service.impl.MoneyOrderTransactionalServiceImpl">
+		<property name="transactionManager"><ref local="hibernateTransactionManager"/></property>
+	</bean>
+
+
+
+    <!-- Managed beans -->
+    <!--bean id="expenseListBean" class="trackit.backingbeans.ExpenseListBean" scope="request">
+        <property name="serviceLocator">
+            <ref bean="serviceLocatorBean"/>
+        </property>
+    </bean-->
+
+
+
+
+</beans>

@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>	
+	<!-- ========================= Start of PERSISTENCE DEFINITIONS ========================= -->  
+	
+	<!-- DataSource Definition -->
+	<bean id="dataSource"
+      	class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+		<property name="driverClassName">
+			<value>com.mysql.jdbc.Driver</value>
+		</property>
+		<property name="url">
+			<value>jdbc:mysql:///expenses</value>
+		</property>
+		<property name="username">
+			<value>root</value>
+		</property>
+		<property name="password">
+			<value>root</value>
+		</property>
+	</bean>
+
+	<!-- Hibernate SessionFactory Definition -->
+	<bean id="sessionFactory" class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+		<property name="mappingResources">
+			<list>
+				<value>trackit/businessobjects/User.hbm.xml</value>					
+			</list>
+		</property>		
+		
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
+				<prop key="hibernate.show_sql">true</prop>
+				<prop key="hibernate.cglib.use_reflection_optimizer">true</prop>
+				<prop key="hibernate.cache.provider_class">org.hibernate.cache.NoCacheProvider</prop>
+			</props>
+		</property>	
+		
+		<property name="dataSource">
+			<ref bean="dataSource"/>
+		</property>
+	</bean>
+	
+	<!-- Spring Data Access Exception Translator Defintion -->
+	<bean id="jdbcExceptionTranslator" class="org.springframework.jdbc.support.SQLErrorCodeSQLExceptionTranslator"> 
+		<property name="dataSource"><ref bean="dataSource"/></property> 
+	</bean> 
+
+	<!-- Hibernate Template Defintion -->
+	<bean id="hibernateTemplate" class="org.springframework.orm.hibernate3.HibernateTemplate"> 
+		<property name="sessionFactory"><ref bean="sessionFactory"/></property> 
+		<property name="jdbcExceptionTranslator"><ref bean="jdbcExceptionTranslator"/></property> 
+	</bean> 
+
+	<!-- Catalog DAO Definition: Hibernate implementation -->
+	<bean id="userDao" class="trackit.dao.hibernate.UserDaoHibernateImpl">
+		<property name="hibernateTemplate"><ref bean="hibernateTemplate"/></property> 
+	</bean>	
+			
+	
+	<!-- ========================= Start of SERVICE DEFINITIONS ========================= -->  
+	
+	<!-- Hibernate Transaction Manager Definition -->
+	<bean id="transactionManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+		<property name="sessionFactory"><ref local="sessionFactory"/></property>
+	</bean>
+	
+	<!--  User Service Defintion -->
+	<bean id="userService" class="trackit.service.impl.UserServiceImpl">
+		<property name="userDao"><ref local="userDao"/></property>		
+	</bean>
+	
+	<!-- Catalog Service Definition -->
+	<!-- bean id="catalogServiceTarget" class="catalog.model.service.impl.CatalogServiceImpl">
+		<property name="catalogDao"><ref local="catalogDao"/></property>
+	</bean -->
+	
+	<!-- Cached Catalog Service Definition -->
+	<!--bean id="catalogServiceTarget" class="catalog.model.service.impl.CachedCatalogServiceImpl" init-method="init">
+		<property name="catalogDao"><ref local="catalogDao"/></property>
+	</bean-->
+	
+	<!-- Transactional proxy for the Catalog Service -->
+	<!--bean id="catalogService" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager"><ref local="transactionManager"/></property>
+		<property name="target"><ref local="catalogServiceTarget"/></property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="get*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="save*">PROPAGATION_REQUIRED</prop>
+				<prop key="update*">PROPAGATION_REQUIRED</prop>
+				<prop key="delete*">PROPAGATION_REQUIRED</prop>
+			</props>
+		</property>
+	</bean-->
+</beans>

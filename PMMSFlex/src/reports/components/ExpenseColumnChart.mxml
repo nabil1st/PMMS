@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" 
+		   width="100%" height="100%" horizontalScrollPolicy="off" verticalScrollPolicy="off"
+		   xmlns:comp="com.connectedpixel.charts.*">
+	
+	<mx:Script>
+		<![CDATA[
+			import event.GetExpenseDataForChartItemEvent;
+			
+			import model.ExpenseDataModelLocator;
+			import model.ExpenseMetaDataModelLocator;
+			
+			import mx.binding.utils.ChangeWatcher;
+			import mx.charts.events.ChartItemEvent;
+			import mx.collections.ArrayCollection;
+			import mx.core.Application;
+			import mx.formatters.DateFormatter;
+			
+			[Bindable]
+			private var expenseDataModelLocator:ExpenseDataModelLocator = ExpenseDataModelLocator.getInstance();
+			
+			[Bindable]
+			private var expenseMetaDataModelLocator:ExpenseMetaDataModelLocator = ExpenseMetaDataModelLocator.getInstance();
+			
+			public var expenseDataView:ExpenseData;
+						
+			
+			private function handleChartItemClicked(ev:ChartItemEvent):void {	
+				var startDate:Date = ev.hitData.item.date;
+				
+				if (expenseDataModelLocator.expenseChartLabelText == "Daily Expenses") {
+					getExpensesForChartItem(startDate, startDate);
+				} else {
+					var endDate:Date = new Date(startDate.fullYear, 
+						startDate.month + 1, 
+						startDate.date, 
+						startDate.hours, 
+						startDate.minutes, 
+						startDate.seconds, 
+						startDate.milliseconds);
+					
+					endDate = new Date(endDate.fullYear, 
+						endDate.month, 
+						endDate.date - 1, 
+						endDate.hours, 
+						endDate.minutes, 
+						endDate.seconds, 
+						endDate.milliseconds);					
+					
+					getExpensesForChartItem(startDate, endDate);
+				}
+			}
+			
+			private function getExpensesForChartItem(startDate:Date, endDate:Date):void {
+				var accountId:String = Application.application.parameters.AccountId;
+				var userId:String = findIdForValue(String(expenseDataView.userComboBox.selectedItem), expenseMetaDataModelLocator.usersRawList);
+				var payeeId:String = findIdForValue(String(expenseDataView.payeeComboBox.selectedItem), expenseMetaDataModelLocator.payeesRawList);
+				var expensePurposeId:String = findIdForValue(String(expenseDataView.expensePurposeComboBox.selectedItem), expenseMetaDataModelLocator.expensePurposeTypesRawList);
+				var expenseCategoryId:String = findIdForValue(String(expenseDataView.expenseCategoryComboBox.selectedItem), expenseMetaDataModelLocator.expenseCategoriesRawList);
+				var expenseTypeId:String = findIdForValue(String(expenseDataView.expenseTypeComboBox.selectedItem), expenseMetaDataModelLocator.expenseTypesForCategoryRawList);
+				var paymentMethodId:String = findIdForValue(String(expenseDataView.paymentMethodComboBox.selectedItem), expenseMetaDataModelLocator.paymentMethodsRawList);
+				var bankAccountId:String = findIdForValue(String(expenseDataView.bankAccountComboBox.selectedItem), expenseMetaDataModelLocator.bankAccountsRawList);
+				var creditCardId:String = findIdForValue(String(expenseDataView.creditCardComboBox.selectedItem), expenseMetaDataModelLocator.creditCardsRawList);
+				var projectId:String = findIdForValue(String(expenseDataView.projectComboBox.selectedItem), expenseMetaDataModelLocator.expenseGroupsRawList);
+				
+				var getExpenseDataForChartItemEvent:GetExpenseDataForChartItemEvent = new GetExpenseDataForChartItemEvent(accountId, userId, startDate, endDate, payeeId, expensePurposeId,
+					expenseCategoryId, expenseTypeId, paymentMethodId, bankAccountId, creditCardId, projectId,
+					this);
+								
+				getExpenseDataForChartItemEvent.dispatch();			
+				
+			}
+			
+			private function findIdForValue(value:String, list:ArrayCollection):String {
+				for each (var item:Object in list) {
+					if (item.description == value) {
+						return item.id.toString();
+					}
+				}	
+				
+				return null;
+			}
+			
+			private function formatExpenseDateChartDate(categoryValue:Object, previousCategoryValue:Object, axis:CategoryAxis, categoryItem:Object):String {			
+				var date:Date = categoryValue as Date;	
+				var dateFormatter:DateFormatter = new DateFormatter();
+				dateFormatter.formatString = "MMM D, YYYY";
+				return dateFormatter.format(date);
+			}
+		]]>
+	</mx:Script>
+	
+	<mx:VBox height="100%" width="100%" verticalScrollPolicy="off" horizontalScrollPolicy="off">
+		
+	
+	
+		<mx:ColumnChart id="expenseDataChart" height="100%" color="0x323232"
+						showDataTips="true" width="100%" showLabelVertically="true" gutterLeft="40" gutterRight="10"
+						itemClick="handleChartItemClicked(event)"
+						dataProvider="{expenseDataModelLocator.expenseDataForCharting}">
+			
+			
+			<mx:horizontalAxis>
+				<mx:CategoryAxis id="dayAccess" categoryField="date" labelFunction="formatExpenseDateChartDate"/>
+			</mx:horizontalAxis>
+			
+			<mx:series>
+				<mx:ColumnSeries xField="date"  yField="amount" displayName="Expense Amount" >
+				</mx:ColumnSeries>
+			</mx:series>
+			<mx:horizontalAxisRenderers>
+				<comp:ScrollableAxisRenderer id="scrollAxisRenderer" axis="{dayAccess}" tickPlacement="none"   placement="bottom"
+											 labelGap="3"  maxVisibleColumns="8"   />
+			</mx:horizontalAxisRenderers>
+			
+		</mx:ColumnChart>
+		
+		<mx:HBox>
+			<mx:Label text="Zoom" />
+			<mx:HSlider id="zoomSlider"  minimum="5" maximum="{expenseDataModelLocator.expenseDataForChartingLength}"  
+						value="{scrollAxisRenderer.maxVisibleColumns}"
+						change="scrollAxisRenderer.maxVisibleColumns=zoomSlider.value"  
+						snapInterval="1" allowTrackClick="true" 
+						liveDragging="true"/>
+		</mx:HBox>
+	</mx:VBox>
+</mx:Canvas>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" width="400" height="300">
+	<mx:VBox height="100%" width="100%" verticalScrollPolicy="off" horizontalScrollPolicy="off" verticalAlign="middle">
+		<mx:HBox width="100%" height="34" horizontalAlign="center">
+			<mx:Label text="No data was found for the supplied criteria." fontSize="18"/>
+		</mx:HBox>
+	</mx:VBox>
+	
+</mx:Canvas>

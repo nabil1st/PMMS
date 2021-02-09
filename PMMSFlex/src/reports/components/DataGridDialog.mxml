@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" width="760" height="580"
+				title="Expense Details"
+				showCloseButton="true"
+				close="windowClose(event)"
+				horizontalScrollPolicy="off" verticalScrollPolicy="off">
+	
+	<mx:Script>
+		<![CDATA[
+			import model.ExpenseDataModelLocator;
+			
+			import mx.collections.ArrayCollection;
+			import mx.managers.PopUpManager;
+			
+			[Bindable]
+			public var expenseDataModelLocator:ExpenseDataModelLocator = ExpenseDataModelLocator.getInstance();
+//			public var dataProvider:ArrayCollection;
+			
+//			[Bindable]
+//			public var total:String;
+			
+			private function windowClose(event:Event):void {
+				PopUpManager.removePopUp(this);
+			}
+		]]>
+	</mx:Script>
+	
+	<mx:VBox id="dataView" width="100%" height="100%" horizontalScrollPolicy="off" verticalScrollPolicy="off" paddingBottom="10" paddingLeft="10" paddingRight="10" paddingTop="10">		
+		<mx:DataGrid id="dataGrid" width="100%" height="100%" 
+					 dataProvider="{expenseDataModelLocator.expenseData}">
+			<mx:columns>
+				<mx:DataGridColumn headerText="Date" dataField="date">
+					<mx:itemRenderer>    											  											
+						<mx:Component>							                    	 							                    								                    	
+							<mx:Label  text="{format(data.date)}"  fontWeight="bold" fontSize="12">
+								<mx:Script>
+									<![CDATA[
+										import mx.formatters.DateFormatter;
+										private function format(data:Object):String {
+											var formatter:DateFormatter = new DateFormatter();
+											formatter.formatString = "MM/DD/YYYY";
+											return formatter.format(data);
+										}
+										
+									]]>
+								</mx:Script>
+							</mx:Label>
+						</mx:Component>
+					</mx:itemRenderer>
+				</mx:DataGridColumn>
+				<mx:DataGridColumn headerText="Amount" dataField="amount">
+					<mx:itemRenderer>    											  											
+						<mx:Component>							                    	 							                    								                    	
+							<mx:Label  text="{format(data.amount)}"  fontWeight="bold" fontSize="12">
+								<mx:Script>
+									<![CDATA[
+										import mx.formatters.CurrencyFormatter;
+										private function format(data:Object):String {
+											var formatter:CurrencyFormatter = new CurrencyFormatter();
+											
+											formatter.precision = 2;
+											formatter.decimalSeparatorTo = ".";
+											formatter.decimalSeparatorFrom = ".";
+											formatter.currencySymbol = "$";
+											formatter.rounding = "nearest";
+											formatter.useThousandsSeparator = true;
+											formatter.alignSymbol = "left";
+											formatter.useNegativeSign = true;
+											
+											return formatter.format(data);
+										}
+										
+									]]>
+								</mx:Script>
+							</mx:Label>
+						</mx:Component>
+					</mx:itemRenderer>
+				</mx:DataGridColumn>
+				<mx:DataGridColumn headerText="Payment Method" dataField="paymentMethod"/>
+				<mx:DataGridColumn headerText="Payee" dataField="payee"/>
+				<mx:DataGridColumn headerText="Group" dataField="group"/>
+				<mx:DataGridColumn headerText="Expense Category" dataField="expenseCategory"/>
+				<mx:DataGridColumn headerText="Expense Type" dataField="expenseType"/>
+				<mx:DataGridColumn headerText="User" dataField="userName"/>
+			</mx:columns>
+		</mx:DataGrid>
+		<mx:HBox width="100%" height="30" horizontalScrollPolicy="off" verticalScrollPolicy="off" verticalAlign="middle" horizontalAlign="right">
+			<mx:Label text="Total"/>
+			<mx:Label id="totalLabel" text="{expenseDataModelLocator.expenseDataTotal}"/>
+		</mx:HBox>
+	</mx:VBox>
+	
+</mx:TitleWindow>

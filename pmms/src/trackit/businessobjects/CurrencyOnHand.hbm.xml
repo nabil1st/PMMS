@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+  <typedef class="trackit.util.GenericEnumUserType" name="currencyType">
+    <param name="enumClass">trackit.businessobjects.CurrencyOnHandType</param>
+    <param name="identifierMethod">toInt</param>
+    <param name="valueOfMethod">fromInt</param>
+  </typedef>
+  <typedef class="trackit.util.GenericEnumUserType" name="transactionType">
+    <param name="enumClass">trackit.businessobjects.TransactionType</param>
+    <param name="identifierMethod">toInt</param>
+    <param name="valueOfMethod">fromInt</param>
+  </typedef>
+  <typedef class="trackit.util.GenericEnumUserType" name="sourceType">
+    <param name="enumClass">trackit.businessobjects.CurrencyOnHandSourceType</param>
+    <param name="identifierMethod">toInt</param>
+    <param name="valueOfMethod">fromInt</param>
+  </typedef>
+  <class name="trackit.businessobjects.CurrencyOnHand" table="CURRENCYONHAND">
+    <id column="ID" name="id">
+      <generator class="native"/>
+    </id>
+    <property column="TYPEID" name="type" type="currencyType"/>
+    <property column="DATE" name="date"/>
+    <property column="AMOUNT" name="amount"/>
+    <property column="SOURCEID" name="sourceId"/>
+    <property column="GROUPID" name="groupId"/>
+    <property column="USERID" name="userId"/>
+    <property column="CHECKNUMBER" name="checkNumber"/>
+    <property column="SOURCE_TYPE_ID" name="sourceType" type="sourceType"/>
+    <property column="USED" name="used"/>
+    <property column="TRANSACTION_TYPE_ID" name="transactionType" type="transactionType"/>
+    <property column="TRANSACTION_ID" name="transactionId"/>
+    <property column="REFERENCE_ID" name="referenceId"/>
+  </class>
+</hibernate-mapping>

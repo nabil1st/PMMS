@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+  <typedef class="trackit.util.GenericEnumUserType" name="paymentMethod">
+    <param name="enumClass">trackit.businessobjects.PaymentMethod</param>
+    <param name="identifierMethod">toInt</param>
+    <param name="valueOfMethod">fromInt</param>
+  </typedef>
+  <class name="trackit.businessobjects.CreditCardPayment" table="CREDIT_CARD_PAYMENT">
+    <id column="CREDIT_CARD_PAYMENT_ID" name="id">
+      <generator class="native"/>
+    </id>
+    <property column="PAYMENT_METHOD_ID" name="paymentMethod" type="paymentMethod"/>
+    <property column="CREDIT_CARD_ID" name="creditCardId"/>
+    <property column="CREDIT_CARD_TRANSACTION_ID" name="creditCardTransactionId"/>
+    <property column="TRANSACTION_ID" name="transactionId"/>
+  </class>
+</hibernate-mapping>
